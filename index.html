@@ -14,7 +14,7 @@
   <!-- Google Fonts: Orbitron (Blade Runner Display), JetBrains Mono & Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&family=Orbitron:wght@700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&family=Orbitron:wght@700;800;900&family=Michroma&display=swap" rel="stylesheet" />
 
   <script>
     tailwind.config = {
@@ -40,6 +40,7 @@
           },
           fontFamily: {
             display: ['"Orbitron"', 'sans-serif'],
+            logo: ['"Michroma"', '"Eurostile"', 'sans-serif'],
             mono: ['"JetBrains Mono"', 'monospace'],
             sans: ['"Inter"', 'system-ui', 'sans-serif']
           }
@@ -124,18 +125,51 @@
   <!-- Huvudcontainer: Mobil-först (max-w-480px centrerad på desktop, fullbredd på mobil) -->
   <div id="app" class="w-full max-w-[480px] min-h-screen bg-noir-bg border-x border-noir-border/60 flex flex-col relative shadow-2xl">
 
+    <!-- ==================== MENY (HAMBURGARE, HÖGER HÖRN) ==================== -->
+    <div class="sticky top-0 z-50 h-0">
+      <button id="menu-btn" onclick="toggleMenu()" aria-label="Meny" aria-expanded="false"
+        class="absolute top-4 right-4 w-11 h-11 rounded-xl bg-noir-card/95 border border-noir-amberBorder flex items-center justify-center text-noir-amberBright hover:bg-noir-cardHover cursor-pointer backdrop-blur">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+          <line x1="4" y1="7" x2="20" y2="7"></line><line x1="4" y1="12" x2="20" y2="12"></line><line x1="4" y1="17" x2="20" y2="17"></line>
+        </svg>
+      </button>
+      <div id="menu-backdrop" onclick="toggleMenu(false)" class="hidden fixed inset-0 z-[-1]"></div>
+      <nav id="menu-panel" class="hidden absolute top-[68px] right-4 w-56 rounded-xl bg-noir-card border border-noir-amberBorder shadow-2xl overflow-hidden divide-y divide-noir-border animate-view">
+        <button id="tab-characters" onclick="switchTab('characters')" class="tab-btn w-full flex items-center justify-between gap-3 px-4 py-3 font-mono text-[12.5px] font-semibold tracking-[0.08em] uppercase text-left cursor-pointer transition-colors text-noir-muted hover:text-white hover:bg-noir-cardHover">
+          <span>KARAKTÄRER</span>
+          <span id="badge-characters" class="px-1.5 py-0.5 rounded-md text-[11px] font-bold bg-[#1B2334] text-slate-300">0</span>
+        </button>
+        <button id="tab-companies" onclick="switchTab('companies')" class="tab-btn w-full flex items-center justify-between gap-3 px-4 py-3 font-mono text-[12.5px] font-semibold tracking-[0.08em] uppercase text-left cursor-pointer transition-colors text-noir-muted hover:text-white hover:bg-noir-cardHover">
+          <span>FÖRETAG</span>
+          <span id="badge-companies" class="px-1.5 py-0.5 rounded-md text-[11px] font-bold bg-[#1B2334] text-slate-300">0</span>
+        </button>
+        <button id="tab-locations" onclick="switchTab('locations')" class="tab-btn w-full flex items-center justify-between gap-3 px-4 py-3 font-mono text-[12.5px] font-semibold tracking-[0.08em] uppercase text-left cursor-pointer transition-colors text-noir-muted hover:text-white hover:bg-noir-cardHover">
+          <span>PLATSER</span>
+          <span id="badge-locations" class="px-1.5 py-0.5 rounded-md text-[11px] font-bold bg-[#1B2334] text-slate-300">0</span>
+        </button>
+        <button id="tab-events" onclick="switchTab('events')" class="tab-btn w-full flex items-center justify-between gap-3 px-4 py-3 font-mono text-[12.5px] font-semibold tracking-[0.08em] uppercase text-left cursor-pointer transition-colors text-noir-muted hover:text-white hover:bg-noir-cardHover">
+          <span>HÄNDELSER</span>
+          <span id="badge-events" class="px-1.5 py-0.5 rounded-md text-[11px] font-bold bg-[#1B2334] text-slate-300">0</span>
+        </button>
+        <button id="tab-timeline" onclick="switchTab('timeline')" class="tab-btn w-full flex items-center justify-between gap-3 px-4 py-3 font-mono text-[12.5px] font-semibold tracking-[0.08em] uppercase text-left cursor-pointer transition-colors text-noir-muted hover:text-white hover:bg-noir-cardHover">
+          <span>TIDSLINJE</span>
+          <span id="badge-timeline" class="px-1.5 py-0.5 rounded-md text-[11px] font-bold bg-[#1B2334] text-slate-300">0</span>
+        </button>
+      </nav>
+    </div>
+
     <!-- ==================== HEADER-SEKTION (SCROLLAR MED SIDAN) ==================== -->
-    <header class="px-4 pt-5 pb-4 border-b border-noir-border bg-noir-bg">
+    <header class="pl-4 pr-16 pt-5 pb-4 border-b border-noir-border bg-noir-bg">
       <!-- Översta raden: Pulsande orange prick + Blade Runner Display Titel -->
       <div class="flex items-start gap-3.5 mb-3.5">
         <div class="mt-2 flex-shrink-0">
           <span class="block w-3 h-3 rounded-full bg-noir-amber pulse-dot"></span>
         </div>
         <div class="leading-none">
-          <h1 class="font-display text-[21px] sm:text-[24px] font-black tracking-[0.14em] text-[#F8FAFC] uppercase drop-shadow-[0_0_10px_rgba(248,250,252,0.12)]">
+          <h1 class="font-logo text-[19px] sm:text-[22px] font-normal tracking-[0.12em] text-noir-amberBright uppercase drop-shadow-[0_0_10px_rgba(245,158,11,0.35)]">
             BLADE RUNNER
           </h1>
-          <div class="font-display text-[20px] sm:text-[23px] font-black tracking-[0.14em] uppercase mt-1.5 flex items-center gap-2">
+          <div class="font-logo text-[18px] sm:text-[21px] font-normal tracking-[0.12em] uppercase mt-2 flex items-center gap-2">
             <span class="text-noir-amberBright drop-shadow-[0_0_8px_rgba(245,158,11,0.45)]">//</span>
             <span class="text-[#F8FAFC]">ARCHIVE</span>
           </div>
@@ -150,7 +184,7 @@
           <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
         </svg>
         <div class="font-mono text-[11px] sm:text-[11.5px] font-semibold tracking-[0.06em] text-noir-amberBright uppercase leading-snug">
-          SPOILER-SKYDD AKTIVT: T.O.M. ORIGINS #5 (2009)
+          <span id="hdr-lock"></span>
         </div>
       </div>
 
@@ -159,69 +193,28 @@
         <!-- Rad 1 -->
         <div class="flex items-center justify-between font-mono text-[11px] tracking-[0.06em] mb-2">
           <span class="text-noir-muted uppercase">ORIGINS PROGRESS</span>
-          <span class="text-noir-amberBright font-bold">5 / 12 NUMMER (42 %)</span>
+          <span class="text-noir-amberBright font-bold"><span id="hdr-prog"></span></span>
         </div>
 
         <!-- Progress bar (42%) -->
         <div class="w-full h-1.5 bg-[#1B2232] rounded-full overflow-hidden mb-2.5">
-          <div class="h-full rounded-full progress-gradient transition-all duration-500" style="width: 41.67%;"></div>
+          <div class="h-full rounded-full progress-gradient transition-all duration-500" id="hdr-bar" style="width: 41.67%;"></div>
         </div>
 
         <!-- Rad 2 -->
         <div class="flex items-center justify-between font-mono text-[10.5px] tracking-[0.05em] text-noir-muted">
           <span>KANON-VERK: 1 / 14 PÅGÅENDE</span>
-          <span class="text-slate-400">LÅST EFTER #5</span>
+          <span class="text-slate-400"><span id="hdr-after"></span></span>
         </div>
       </div>
     </header>
-          <span id="badge-characters" class="px-1.5 py-0.5 rounded-md text-[11px] font-extrabold bg-black/20 text-[#0A0D14]">10</span>
-        </button>
 
-        <button
-          id="tab-locations"
-          onclick="switchTab('locations')"
-          class="tab-btn flex-shrink-0 flex items-center gap-2 px-3.5 py-2 rounded-xl font-mono text-[12px] font-semibold tracking-[0.06em] uppercase transition-all cursor-pointer bg-noir-card border border-noir-border text-noir-muted hover:text-white"
-        >
-          <span>PLATSER &amp; FÖRETAG</span>
-          <span id="badge-locations" class="px-1.5 py-0.5 rounded-md text-[11px] font-bold bg-[#1B2334] text-slate-300">6</span>
-        </button>
-
-        <button
-          id="tab-events"
-          onclick="switchTab('events')"
-          class="tab-btn flex-shrink-0 flex items-center gap-2 px-3.5 py-2 rounded-xl font-mono text-[12px] font-semibold tracking-[0.06em] uppercase transition-all cursor-pointer bg-noir-card border border-noir-border text-noir-muted hover:text-white"
-        >
-          <span>HÄNDELSER</span>
-          <span id="badge-events" class="px-1.5 py-0.5 rounded-md text-[11px] font-bold bg-[#1B2334] text-slate-300">10</span>
-        </button>
-
-        <button
-          id="tab-locations"
-          onclick="switchTab('locations')"
-          class="tab-btn flex-shrink-0 flex items-center gap-2 px-3.5 py-2 rounded-xl font-mono text-[12px] font-semibold tracking-[0.06em] uppercase transition-all cursor-pointer bg-noir-card border border-noir-border text-noir-muted hover:text-white"
-        >
-          <span>PLATSER &amp; FÖRETAG</span>
-          <span id="badge-locations" class="px-1.5 py-0.5 rounded-md text-[11px] font-bold bg-[#1B2334] text-slate-300">5</span>
-        </button>
-
-        <button
-          id="tab-events"
-          onclick="switchTab('events')"
-          class="tab-btn flex-shrink-0 flex items-center gap-2 px-3.5 py-2 rounded-xl font-mono text-[12px] font-semibold tracking-[0.06em] uppercase transition-all cursor-pointer bg-noir-card border border-noir-border text-noir-muted hover:text-white"
-        >
-          <span>HÄNDELSER</span>
-          <span id="badge-events" class="px-1.5 py-0.5 rounded-md text-[11px] font-bold bg-[#1B2334] text-slate-300">6</span>
-        </button>
-
-        <button
-          id="tab-timeline"
-          onclick="switchTab('timeline')"
-          class="tab-btn flex-shrink-0 flex items-center gap-2 px-3.5 py-2 rounded-xl font-mono text-[12px] font-semibold tracking-[0.06em] uppercase transition-all cursor-pointer bg-noir-card border border-noir-border text-noir-muted hover:text-white"
-        >
-          <span>TIDSLINJE</span>
-          <span id="badge-timeline" class="px-1.5 py-0.5 rounded-md text-[11px] font-bold bg-[#1B2334] text-slate-300">5</span>
-        </button>
-      </nav>
+    <!-- ==================== SEKTIONSRUBRIK + SÖK ==================== -->
+    <section class="px-4 pt-3 pb-3 border-b border-noir-border bg-noir-bg space-y-3">
+      <div class="flex items-center gap-2 font-mono text-[11px] tracking-[0.1em] uppercase text-noir-muted">
+        <span class="text-noir-amberBright">//</span>
+        <span id="section-title" class="font-bold text-noir-amberBright">KARAKTÄRER</span>
+      </div>
 
       <!-- Sökfält -->
       <div class="relative">
@@ -259,7 +252,7 @@
       <div id="content-container" class="space-y-3"></div>
     </main>
 
-    <!-- ==================== DETALJVY / WIKI-SIDA (KARAKTÄR) ==================== -->
+    <!-- ==================== DETALJVY / ARCHIVE-SIDA (KARAKTÄR) ==================== -->
     <section id="character-detail-view" class="hidden flex-1 px-4 py-4 space-y-4 animate-view">
       <!-- Tillbaka-knapp -->
       <button
@@ -281,7 +274,7 @@
                 id="detail-portrait-img"
                 src=""
                 alt="Karaktärsporträtt"
-                class="hidden w-full h-full object-cover"
+                class="hidden w-full h-full object-cover object-top"
               />
               <!-- Cyberpunk Placeholder -->
               <div id="detail-portrait-placeholder" class="w-full h-full flex flex-col items-center justify-center p-2 text-center relative scanlines">
@@ -485,25 +478,27 @@
       characters: [
         {
           id: 'cal-moreaux',
+          image: 'img/cal-moreaux.jpg',
           name: 'Cal Moreaux',
           initials: 'CM',
           faction: 'lapd',
-          subtitle: 'Kriminalinspektör, LAPD (2009)',
-          badge: 'LAPD // UTREDARE',
-          born: 'Ca 2074 (35 år)',
-          birthplace: 'Los Angeles, Jorden',
-          occupation: 'Kriminalinspektör (LAPD)',
-          status: 'I korseld mellan LAPD och Tyrell Corp (efter #5)',
-          family: 'Moreaux-familjen',
-          affiliation: 'Los Angeles Police Department (LAPD)',
+          subtitle: 'LAPD-detektiv, veteran från Kalanthia',
+          badge: 'LAPD // DETEKTIV',
+          born: 'Okänt',
+          birthplace: 'Okänt',
+          occupation: 'Detektiv (LAPD), har lämnat kåren i #5',
+          status: 'Under Tyrells tryck. Misshandlad av Carlisles grupp i slummen (#6)',
+          family: 'Systern Nia (inlagd på sjukhus)',
+          affiliation: 'LAPD (avgått) / bunden till Tyrell Corp',
           firstAppearance: 'Blade Runner Origins #1',
-          quote: 'När Tyrell Corporation säger åt polisen att sluta gräva, är det precis då man borde hämta en större spade.',
-          summary: 'En härdad men principfast LAPD-detektiv i ett regntungt Los Angeles 2009 som nu insett att Tyrell Corp jagar de förrymda försökspersonerna med dödligt våld.',
+          summary: 'Plågad LAPD-detektiv i Los Angeles 2009 som utreder en Tyrell-forskares påstådda självmord och dras in i en konspiration kring replikanter.',
           bio: [
-            'Cal Moreaux arbetar som kriminalinspektör vid LAPD år 2009 — en tid innan den särskilda Blade Runner-enheten ens existerar. När den briljante Tyrell-forskaren Dr. Lydia Kine hittas död i sitt laboratorium kallas Cal in för att avskriva fallet som självmord.',
-            'Genom ledtrådar på brottsplatsen och i Los Angeles mörka bakgator upptäcker Cal att Lydia Kine i hemlighet bedrev oetiska biologiska experiment utanför Tyrell Corporations officiella register. Ju närmare sanningen Cal kommer, desto hårdare försöker Tyrells säkerhetschef Ilora Stahl tysta ned utredningen.',
-            'I Origins #3 och #4 leder spåren Cal till underjordiska kliniker, försökspersoner med onaturliga krafter som Nia, samt jakten på Lydias bror Markus Kine — vilket sätter Cal i direkt skottlinje mellan LAPD:s korruption och Tyrells privata styrkor.',
-            'I Origins #5 nystar Cal vidare i kopplingen mellan Lydias död och de saknade människorna i Los Angeles undre värld. Han inser att de jagade "avvikarna" som rymt från Lydias labb — däribland Effie, Ilora och Kallie — i själva verket är mänskliga offer för olagliga experiment. När Tyrells beväpnade säkerhetsstyrkor hinner ikapp gruppen dras Cal in i en våldsam eldstrid och tvingas välja sida för att rädda rymlingarna från att likvideras.'
+            'Cal Moreaux är LAPD-detektiv i Los Angeles år 2009, tio år innan en Blade Runner-enhet finns. Han är veteran från Kalanthia, en blodig belägring 2007 där replikanter attackerade en off-world-koloni och där han var en av de överlevande. Kriget har gett honom PTSD. Hans syster Nia ligger på sjukhus i katatoniskt tillstånd, vilket tynger honom.',
+            'I #1 får han i uppdrag att utreda Dr. Lydia Kines till synes självmord. Hon hittas hängd i sitt låsta laboratorium på Tyrell Corporation. Han ska avsluta fallet snabbt och tyst, men ser direkt att något inte stämmer. Ilora Stahl, Tyrells representant, blockerar hans frågor och antyder att hans talanger vore bättre använda hos Tyrell. Slutet av numret visar att någon vill tysta både Cal och Lydias bror Marcus, som attackeras.',
+            'I #2 och #3 växer misstanken mot Tyrell. Cal gömmer Effie Koropey, Lydias kollega, i ett gömställe och söker igenom Lydias lägenhet. Där ställer han Asa, replikanten som räddade Marcus, mot väggen.',
+            'I #4 jagar Cal Asa över hustak, gator och in på ett museum. Effie skjuts ihjäl av Stahl, som sedan beordrar Cal att eliminera en förrymd Nexus-5 och hitta Marcus. Cal inser att Asa inte är Nexus-5:an och de går samman.',
+            'I #5 har Cal lämnat LAPD men sitter fast i Tyrells krav. Tillsammans med Asa tar han hand om den felfungerande Nexus-4:an Arnault, som dör inom några timmar. Därefter besöker han Nia på sjukhuset, där Stahl konfronterar honom och han vräker ur sig sin ilska mot henne.',
+            'I #6 återvänder Cal till slummen, där han växte upp. Carlisles grupp tror att han arbetar åt Tyrell och slår honom nästan till döds, tills han får förklara att han inte är fienden. Gutman föreslår dessutom att Stahl ska få just Cal att mörklägga morden.'
           ]
         },
         {
@@ -511,22 +506,20 @@
           name: 'Dr. Lydia Kine',
           initials: 'LK',
           faction: 'tyrell',
-          subtitle: 'Chefsforskare, Tyrell Corporation',
-          badge: 'TYRELL // FORSKNING',
-          born: 'Ca 2068 (41 år vid tidpunkten för sin död)',
-          birthplace: 'San Francisco, Jorden',
-          occupation: 'Chefsforskare & Biotekniker',
-          status: 'Avliden i #1 (experimentens fulla vidd avslöjad i #5)',
-          family: 'Markus Kine (bror)',
-          affiliation: 'Tyrell Corporation (tidigare)',
+          subtitle: 'Senior bioingenjör, Tyrell Corporation',
+          badge: 'TYRELL // BIOTEKNIK',
+          born: 'Okänt',
+          birthplace: 'Okänt',
+          occupation: 'Senior bioingenjör, arbetade med Nexus-5-projektet',
+          status: 'Avliden (#1). Hennes medvetande lever vidare i replikanten Asa (#3)',
+          family: 'Marcus Kine (bror)',
+          affiliation: 'Tyrell Corporation',
           firstAppearance: 'Blade Runner Origins #1',
-          quote: 'Vi skapar inte bara verktyg åt Eldon Tyrell. Vi leker med vad som gör en människa levande.',
-          summary: 'Briljant bioteknikforskare på Tyrell Corporation vars mystiska död i #1 sätter igång hela kedjan av avslöjanden kring tidiga replikant-experiment.',
+          summary: 'Tyrell-forskare som hittas hängd i sitt laboratorium i #1. Hennes död sätter igång hela utredningen, och hon hade lämnat spår efter sig.',
           bio: [
-            'Dr. Lydia Kine var en av Eldon Tyrells mest begåvade forskare under 2000-talets första decennium, djupt involverad i utvecklingen av tidig syntetisk vävnad och artificiella organismer.',
-            'I inledningen av Origins #1 hittas hon död på ett sätt som arrangerats för att likna ett självmord. Men Cal Moreauxs utredning avslöjar snabbt att Lydia hade ett dolt laboratorium i Los Angeles och att hon förde krypterade anteckningar.',
-            'Genom #3 och #4 framkommer den mörka sanningen: Lydia använde utsatta människor från gatan som försökspersoner för att övervinna tekniska hinder i sin forskning — experiment som resulterade i individer som Nia och som hennes bror Markus nu försöker skydda eller dölja.',
-            'I Origins #5 klarnar hela omfattningen av Lydias hemliga projekt: innan hon kunde skapa de första rena Nexus-prototyperna försökte hon framställa syntetiskt liv genom att genetiskt och kirurgiskt modifiera levande mänskliga subjekt med nackimplantat — experiment som orsakade svåra minnesfragmenteringar och fysiska biverkningar hos de överlevande.'
+            'Dr. Lydia Kine var senior bioingenjör på Tyrell Corporation och arbetade med en experimentell ny sorts replikant, den som blir Nexus-5. Tillsammans med sin protegé Effie Koropey forskade hon på hur medvetande kan överföras.',
+            'I #1 hittas hon död i sitt låsta laboratorium, och det ser ut som självmord. Cal Moreaux tror inte på det. Före sin död hade hon raderat nästan alla filer och lämnat ledtrådar efter sig.',
+            'I #3 visar det sig att Lydia överfört sitt medvetande till replikanten Asa före sin död. Asa fick utseendet och namnet av en man som Lydia ritade som barn. Hon vill övertyga sin bror Marcus om att hon fortfarande finns kvar.'
           ]
         },
         {
@@ -534,129 +527,67 @@
           name: 'Asa',
           initials: 'AS',
           faction: 'others',
-          subtitle: 'Mekaniker / Tidig syntetisk konstruktion',
-          badge: 'NEXUS-PROTOTYP // OKÄND',
-          born: 'Okänt (Konstruerad / Tillverkad ~2007)',
-          birthplace: 'Los Angeles (Hemligt Tyrell-labb)',
-          occupation: 'Oberoende mekaniker / Flykting',
-          status: 'På fri fot i Los Angeles',
-          family: 'Inga kända biologiska band (Skapad av Lydia Kine)',
-          affiliation: 'Kopplad till Dr. Lydia Kine',
-          firstAppearance: 'Blade Runner Origins #2',
-          quote: 'Jag är inte det du tror att jag är, detektiv. Och jag är inte den enda.',
-          summary: 'En gåtfull gestalt i Los Angeles undre värld med direkt koppling till Lydia Kines förbjudna forskning och de tidigaste stegen mot replikanter.',
+          subtitle: 'Replikant med Lydia Kines medvetande',
+          badge: 'REPLIKANT // NEXUS-4',
+          born: 'Okänt (konstruerad)',
+          birthplace: 'Okänt',
+          occupation: 'Replikant, flykting',
+          status: 'På fri fot, samarbetar med Cal Moreaux (#5)',
+          family: 'Marcus Kine (Lydias bror)',
+          affiliation: 'Ingen. Fd. koppling till Tyrell Corp genom Lydia Kine',
+          firstAppearance: 'Blade Runner Origins #2 (identiteten avslöjas i #3)',
+          summary: 'Replikant som bär Dr. Lydia Kines medvetande. Räddar hennes bror Marcus från Tyrell och blir senare Cals allierade.',
           bio: [
-            'Asa dyker upp i utredningens utkant som en mystisk och vaksam individ som känner till betydligt mer om Dr. Lydia Kines dubbelspel än vad Tyrell Corporation anar.',
-            'I Origins #3 avslöjas Asas sanna natur och djupa koppling till Lydias experiment — ett avgörande bevis på att gränsen mellan människa och syntetisk skapelse redan börjat suddas ut år 2009.',
-            'Asa rör sig försiktigt genom Sector 4 och samarbetar motvilligt med Cal Moreaux för att hindra Tyrells agenter från att lägga beslag på Lydias sista kvarvarande forskning.'
+            'Asa dyker upp i #2 som den mystiska replikant som kraschar spinnern där Marcus Kine fraktas till Tyrell och räddar honom. I #3 avslöjas att Asa bär Lydia Kines medvetande, överfört före hennes död.',
+            'Marcus är kluven och avskräckt och tvivlar på att detta verkligen är hans syster. Asa tar honom till ett pierogistånd för att väcka barndomsminnen, men det slutar illa när stånd-replikanten misshandlas och slår tillbaka. Asa försöker då bevisa sin identitet med Lydias teckningar i hennes lägenhet, men möter Cal Moreaux där.',
+            'I #4 jagas Asa av Cal över hustak, gator och ett museum. Effie skjuts ihjäl av Stahl, och Asa hinner ta farväl. Cal och Asa kommer överens om att gå samman och ta itu med Nexus-5:an.',
+            'I #5 hjälper Asa Cal att stoppa den felfungerande Nexus-4:an Arnault och försöker laga relationen till Marcus, utan framgång.',
+            'I #6 bråkar Asa och Marcus om de ska hålla sig gömda eller leta upp replikanten bakom morden. Asa tror att mördaren är en Nexus-4 som väckts av Nexus-5:an. Under jakten attackeras de i en lägenhet, och Marcus slungas ut genom ett fönster men klarar sig.'
           ]
         },
         {
           id: 'markus-kine',
-          name: 'Markus Kine',
+          name: 'Marcus Kine',
           initials: 'MK',
           faction: 'others',
-          subtitle: 'Lydia Kines bror / Informationsbärare',
-          badge: 'EFTERLYST // NYCKELVITTNE',
-          born: 'Ca 2072 (37 år)',
-          birthplace: 'San Francisco, Jorden',
-          occupation: 'F.d. systemtekniker',
-          status: 'Jagad av både LAPD och Tyrell Corp',
-          family: 'Dr. Lydia Kine (syster, avliden)',
-          affiliation: 'Ingen (F.d. koppling till Lydia Kine)',
-          firstAppearance: 'Blade Runner Origins #2',
-          quote: 'Lydia visste att de skulle komma efter henne. Han gav mig det enda de inte kan återskapa.',
-          summary: 'Dr. Lydia Kines bror som håller sig gömd i Los Angeles med livsviktig information om systerns forskning och försökspersoner.',
-          bio: [
-            'Markus Kine är bror till den avlidna forskaren Dr. Lydia Kine. Efter hennes död blir han omedelbart det främsta målet för både LAPD och Tyrell Corporations privata säkerhetsstyrkor.',
-            'I Origins #3 och #4 står det klart att Lydia anförtrodde Markus centrala delar av sin forskning innan hon dog, i hopp om att hålla det borta från Eldon Tyrell och Ilora Stahl.',
-            'Markus tvingas navigera genom Los Angeles farligaste bakgator och underjordiska kliniker, samtidigt som hans fysiska och mentala tillstånd visar att han är djupare indragen i systerns experiment än han först velat erkänna.'
-          ]
-        },
-        {
-          id: 'nia',
-          name: 'Nia',
-          initials: 'NI',
-          faction: 'others',
-          subtitle: 'Försöksperson / Tidig prototyp',
-          badge: 'FÖRSÖKSPERSON // #04',
-          born: 'Ca 2088 (21 år)',
-          birthplace: 'Los Angeles, Sector 4',
-          occupation: 'F.d. gatuförsäljare / Testobjekt',
-          status: 'Överlevande i Los Angeles bakgator',
-          family: 'Okänd familjebakgrund',
-          affiliation: 'Offer för Lydia Kines experiment',
-          firstAppearance: 'Blade Runner Origins #3',
-          quote: 'Hon lovade att göra oss starkare. Hon sa aldrig vad det skulle kosta.',
-          summary: 'En ung kvinna från Los Angeles gator som utsattes för Lydia Kines hemliga experiment och nu kämpar för sin överlevnad.',
-          bio: [
-            'Nia introducerades i samband med avslöjandena kring Dr. Lydia Kines hemliga laboratorium. Hon rekryterades under falska förespeglingar från Los Angeles fattigare kvarter för att delta i medicinska tester.',
-            'Experimenten förändrade hennes biologi och gav henne övermänsklig styrka och uthållighet — tidiga, råa föregångare till de egenskaper som senare skulle definiera Nexus-seriens replikanter.',
-            'I Origins #4 hamnar Nia i centrum för striden när både Cal Moreaux och Ilora Stahls styrkor spårar upp henne.'
-          ]
-        },
-        {
-          id: 'ilora',
-          name: 'Ilora',
-          initials: 'IL',
-          faction: 'others',
-          subtitle: 'Förrymd försöksperson / Tidig prototyp-replikant',
-          badge: 'FÖRSÖKSPERSON // RYMLING',
-          born: 'Ca 2086 (23 år)',
-          birthplace: 'Los Angeles, Jorden',
-          occupation: 'Rymling från Lydias hemliga labb',
-          status: 'På flykt undan Tyrell Corp (efter #5)',
-          family: 'Förlorade / fragmenterade familjeminnen',
-          affiliation: 'Rymlingarna (tillsammans med Effie & Kallie)',
-          firstAppearance: 'Blade Runner Origins #5',
-          quote: 'De satte metall i nacken på oss och kallade det framtiden. Men jag minns vem jag var.',
-          summary: 'En av de överlevande försökspersonerna från Lydia Kines hemliga labb med implantat i nacken och övermänsklig styrka, på flykt tillsammans med Effie och Kallie.',
-          bio: [
-            'Ilora är en av de utsatta människor som utsattes för Dr. Lydia Kines hemliga och olagliga modifieringsexperiment innan hon lyckades fly ut i Los Angeles slummen tillsammans med Effie och Kallie.',
-            'Likt de andra överlevande bär hon synliga ärr och kirurgiska implantat i nacken samt besitter en onaturlig fysisk styrka och uthållighet. I Origins #5 kämpar Ilora för att förstå sin egen identitet och vad som återstår av hennes mänsklighet efter Lydias ingrepp, samtidigt som hon tvingas försvara gruppen när Tyrell Corporations beväpnade styrkor lokaliserar deras gömställe.'
-          ]
-        },
-        {
-          id: 'kallie',
-          name: 'Kallie',
-          initials: 'KA',
-          faction: 'others',
-          subtitle: 'Ung rymling / Försöksperson',
-          badge: 'FÖRSÖKSPERSON // RYMLING',
-          born: 'Ca 2090 (19 år)',
-          birthplace: 'Los Angeles, Jorden',
-          occupation: 'Rymling från Lydias hemliga labb',
-          status: 'På flykt undan Tyrell Corp (efter #5)',
-          family: 'Saknad / okänd familj',
-          affiliation: 'Rymlingarna (tillsammans med Effie & Ilora)',
-          firstAppearance: 'Blade Runner Origins #5',
-          quote: 'Så länge vi håller ihop kan de inte ta oss tillbaka till det där mörkret.',
-          summary: 'En ung och sårbar rymling från Lydia Kines experiment som trots rädslan visar stark lojalitet mot Effie, Ilora och resten av gruppen.',
-          bio: [
-            'Kallie tillhör den lilla gruppen unga försökspersoner som lyckades fly från Dr. Lydia Kines underjordiska anläggning och nu gömmer sig i Los Angeles övergivna industriområden.',
-            'I Origins #5 präglas Kallie av traumat efter testerna i laboratoriet. Även om hon är fysiskt och emotionellt sårbar vägrar hon att överge Effie när de fysiska biverkningarna slår till, och hon står lojalt vid Ilora och gruppens sida under Tyrell Corps nattliga räd.'
-          ]
-        },
-        {
-          id: 'effie',
-          name: 'Effie',
-          initials: 'EF',
-          faction: 'lapd',
-          subtitle: 'Kriminaltekniker / Ledare för rymlingarna',
-          badge: 'LAPD // FORENSICS & RYMLING',
-          born: 'Ca 2078 (31 år)',
-          birthplace: 'Los Angeles, Jorden',
-          occupation: 'Kriminaltekniker (LAPD) / Beskyddare av rymlingarna',
-          status: 'På flykt med försökspersonerna (efter #5)',
-          family: 'Inga kända uppgifter',
-          affiliation: 'LAPD / Rymlingarna (Ilora, Kallie m.fl.)',
+          subtitle: 'Lydia Kines bror',
+          badge: 'NYCKELVITTNE // MÅLTAVLA',
+          born: 'Okänt',
+          birthplace: 'Okänt',
+          occupation: 'Okänt',
+          status: 'Gömd tillsammans med Asa (#5)',
+          family: 'Dr. Lydia Kine (syster, avliden. Medvetande i Asa)',
+          affiliation: 'Ingen',
           firstAppearance: 'Blade Runner Origins #1',
-          quote: 'Siffrorna i den här obduktionsrapporten stämmer inte, Cal. Någon har tvättat filerna.',
-          summary: 'Cals lojala kollega inom LAPD som i #5 leder och skyddar de förrymda försökspersonerna på flykt undan Tyrell Corps säkerhetsstyrkor.',
+          summary: 'Lydias bror, som blir en måltavla för Tyrell och sedan återförenas med sin syster i en kropp han inte kan acceptera.',
           bio: [
-            'Effie arbetar nära Cal Moreaux inom LAPD och fungerar som hans viktigaste bollplank och tekniska resurs när utredningen kring Lydia Kine möter politiskt motstånd uppifrån.',
-            'När högre chefer inom poliskåren försöker stänga fallet på order av Tyrell Corporation, hjälper Effie Cal i hemlighet att spåra kemiska substanser, krypterade data och kopplingar till black market-kliniker i staden.',
-            'I Origins #5 tar Effie en avgörande roll som ledare och beskyddare för de förrymda försökspersonerna — däribland Ilora och Kallie — när de gömmer sig undan Tyrell Corporations jaktenheter. Samtidigt tvingas hon kämpa mot svåra minnesfragmenteringar och de smärtsamma fysiska biverkningarna av Lydias experiment, vilket gör varje timme på flykt till en kamp mot klockan.'
+            'Marcus Kine är bror till Dr. Lydia Kine. I #1 tas han in till LAPD-stationen, och Cal och han attackeras tillsammans i slutet av numret.',
+            'I #2 hämtas Marcus av Tyrell-personal, bland dem Effie, men spinnern attackeras och kraschar och han räddas av en replikant.',
+            'I #3 visar det sig att räddaren är Asa, en replikant med Lydias medvetande. Marcus är fullständigt kluven och försöker lämna, övertygad om att detta bara är en simulering av hans syster.',
+            'Efter #4 gömmer Asa honom på La Plume Sauvage. I #5 försöker Asa laga deras relation, men Marcus förstår inte vad som hänt.',
+            'I #6 pratar Divina med honom om Asas förvandling. Han och Asa bråkar sedan om vad de ska göra, och Marcus hamnar mitt i en attack under jakten på en mördare.'
+          ]
+        },
+        {
+          id: 'effie-koropey',
+          name: 'Effie Koropey',
+          initials: 'EK',
+          faction: 'tyrell',
+          subtitle: 'Junior bioingenjör, Lydia Kines protegé',
+          badge: 'TYRELL // BIOTEKNIK',
+          born: 'Okänt',
+          birthplace: 'Okänt',
+          occupation: 'Junior bioingenjör, Tyrell Corporation',
+          status: 'Avliden (#4), skjuten av Ilora Stahl',
+          family: 'Okänt',
+          affiliation: 'Tyrell Corporation',
+          firstAppearance: 'Blade Runner Origins #1',
+          summary: 'Lydia Kines protegé och medarbetare, som delade hennes forskning och dödas av Stahl i #4.',
+          bio: [
+            'Effie Koropey var Lydia Kines protegé och junior bioingenjör, delaktig i forskningen om medvetandeöverföring och Nexus-5-prototypen. Stahl stoppar Cal från att utfråga henne i #1.',
+            'I #2 försöker Effie få tillgång till Lydias filer men upptäcker att de raderats. Stahl pressar henne att berätta allt Lydia kan ha sagt. Effie följer med när Marcus ska hämtas från polisstationen, då spinnern attackeras.',
+            'I #3 gömmer Cal henne i ett skyddat bostad. Stahl hittar filer i hennes lägenhet som avslöjar att Lydia upptäckt medvetandeöverföring, men Effie påstår att hon inget vet.',
+            'I #4 kommer Effie till museet för att berätta något för Cal, men skjuts ihjäl av Stahl.'
           ]
         },
         {
@@ -664,21 +595,22 @@
           name: 'Ilora Stahl',
           initials: 'IS',
           faction: 'tyrell',
-          subtitle: 'Säkerhetschef, Tyrell Corporation',
-          badge: 'TYRELL // SÄKERHET',
-          born: 'Ca 2065 (44 år)',
-          birthplace: 'New York, Jorden',
-          occupation: 'Säkerhetschef & Operativ chef',
-          status: 'Leder väpnad jakt på rymlingarna (efter #5)',
-          family: 'Stahl-familjen',
+          subtitle: 'Direktör, Tyrell Corporation',
+          badge: 'TYRELL // LEDNING',
+          born: 'Okänt',
+          birthplace: 'Okänt',
+          occupation: 'Tyrell-direktör, Tyrells representant gentemot LAPD',
+          status: 'Leder Tyrells jakt på Nexus-5:an (#5)',
+          family: 'Okänt',
           affiliation: 'Tyrell Corporation',
           firstAppearance: 'Blade Runner Origins #1',
-          quote: 'Tyrell Corporation bygger framtiden, detektiv. Vi har inte råd med spöken från det förflutna.',
-          summary: 'Kallblodig säkerhetsansvarig på Tyrell Corporation som i #5 skickar ut dödliga jaktenheter för att eliminera alla spår av Lydias mänskliga experiment.',
+          summary: 'Eldon Tyrells hårda representant som styr utredningen av Lydia Kines död och mördar Effie i #4.',
           bio: [
-            'Ilora Stahl är en högt uppsatt säkerhetsoperatör inom Tyrell Corporation som svarar direkt inför Eldon Tyrell. Hennes uppdrag är att skydda företagets rykte och immateriella tillgångar till varje pris.',
-            'Omedelbart efter Lydia Kines död kliver Stahl in på brottsplatsen för att ta kontroll över utredningen. När hon inser att Cal Moreaux vägrar låta sig köpas eller skrämmas, sätter hon in egna agenter för att spåra upp Markus Kine, Asa och Nia före polisen.',
-            'I Origins #5 trappar Stahl upp operationen till fullskalig jakt i Los Angeles slumkvarter. Under Tyrell Corps hårda ledning skickas tungt beväpnade operatörer ut med strikta order att lokalisera och likvidera de förrymda försökspersonerna innan polisen eller allmänheten kan bevisa att företaget utfört olagliga experiment på levande människor.'
+            'Ilora Stahl är en högt uppsatt Tyrell-direktör som Eldon Tyrell själv valt för att hantera allt LAPD frågar om kring Lydia Kines död. I #1 blockerar hon Cals frågor och påstår att allt redan skickats till polisen. Hon säger även att hans förmågor skulle göra större nytta hos Tyrell.',
+            'I #2 och #3 överlever hon spinnerkraschen och kallas till videomöte med Eldon Tyrell. Hennes assistent Osha hämtar henne. Därefter hittar hon filer hos Effie som avslöjar att Lydia upptäckt medvetandeöverföring.',
+            'I #4 ansluter hon till jakten på Asa och skjuter Effie på museet. Därefter beordrar hon Cal att eliminera en förrymd Nexus-5 och hitta Marcus.',
+            'I #5 konfronterar hon Cal på sjukhuset efter Arnaults död, men han sätter henne på plats och hon går därifrån.',
+            'I #6 får hon veta att Nexus-4-replikanter mördar sina ägare, vilket blir en PR-mardröm för Tyrell. Hon möter Sgt. Gutman för att få dödsfallen mörklagda, men han vägrar och föreslår att Cal ska göra det.'
           ]
         },
         {
@@ -688,185 +620,182 @@
           faction: 'tyrell',
           subtitle: 'Grundare & VD, Tyrell Corporation',
           badge: 'TYRELL // GRUNDARE',
-          born: 'Ca 2030 (79 år)',
-          birthplace: 'Los Angeles, Jorden',
-          occupation: 'Företagsledare, Vetenskapsman & Visionär',
+          born: 'Okänt',
+          birthplace: 'Okänt',
+          occupation: 'Grundare och VD, Tyrell Corporation',
           status: 'VD för Tyrell Corporation (2009)',
-          family: 'Tyrell-dynastin',
+          family: 'Okänt',
           affiliation: 'Tyrell Corporation',
-          firstAppearance: 'Blade Runner (1982) / Origins #1',
-          quote: 'Framsteg kräver uppoffringar, Ilora. Se bara till att de inte kan spåras tillbaka till min dörr.',
-          summary: 'Grundaren av Tyrell Corporation vars tidiga imperium i 2009 års Los Angeles lägger grunden för replikantteknologin.',
+          firstAppearance: 'Blade Runner (1982) / Origins #3',
+          summary: 'Mannen bakom Tyrell Corporation, vars bolag vid denna tid börjar sin klättring mot dominans med Nexus-fasens replikanter.',
           bio: [
-            'År 2009 har Eldon Tyrell ännu inte byggt de gigantiska pyramider som senare ska dominera Los Angeles silhuett, men hans företag är redan ledande inom bioteknik och artificiell intelligens.',
-            'I Origins #1–#4 agerar Tyrell främst från skuggorna genom sin säkerhetschef Ilora Stahl. Han är fast besluten att dölja Lydia Kines misslyckade eller oauktoriserade experiment för allmänheten, samtidigt som han vill åt de vetenskapliga genombrott hon lyckades uppnå.',
-            'Genom avslöjandena i Origins #5 blir det tydligt hur långt Tyrells organisation är beredd att gå för att sopa igen spåren efter övergångsfasen mellan mänsklig modifiering och de kommande rena Nexus-prototyperna.'
+            'Eldon Tyrell leder Tyrell Corporation, bolaget som utvecklat robotar till Nexus-fasen och replikanter som är nästan identiska med människor. År 2009 är bolaget redan mäktigt men har ännu inte nått sin senare dominans.',
+            'Det var Eldon som valde Ilora Stahl att hantera polisens frågor kring Lydia Kines död. I #3 kallar han henne till videomöte efter spinnerkraschen.',
+            'Hans roll i resten av berättelsen hålls dold här tills du har läst vidare.'
+          ]
+        },
+        {
+          id: 'nia',
+          name: 'Nia Moreaux',
+          initials: 'NM',
+          faction: 'others',
+          subtitle: 'Cal Moreauxs syster',
+          badge: 'FAMILJ // PATIENT',
+          born: 'Okänt',
+          birthplace: 'Okänt',
+          occupation: 'Okänt',
+          status: 'Inlagd på sjukhus, katatonisk (#5)',
+          family: 'Cal Moreaux (bror)',
+          affiliation: 'Ingen',
+          firstAppearance: 'Blade Runner Origins #1',
+          summary: 'Cals syster, som ligger på sjukhus i katatoniskt tillstånd och är en stor del av hans oro.',
+          bio: [
+            'Nia Moreaux är Cal Moreauxs syster. I #1 framgår att hon befinner sig i ett katatoniskt tillstånd och att Cal oroar sig mycket för henne.',
+            'I #5 besöker Cal henne på sjukhuset. Där konfronterar Stahl honom.',
+            'Mer om hennes bakgrund hålls dolt tills du har läst vidare.'
+          ]
+        },
+        {
+          id: 'arnault',
+          from: 5,
+          name: 'Arnault',
+          initials: 'AR',
+          faction: 'others',
+          subtitle: 'Felfungerande Nexus-4-replikant',
+          badge: 'REPLIKANT // NEXUS-4',
+          born: 'Okänt',
+          birthplace: 'Okänt',
+          occupation: 'Hushållstjänare (replikant)',
+          status: 'Avliden (#5)',
+          family: 'Ingen',
+          affiliation: 'Ägd av en civil hushållare',
+          firstAppearance: 'Blade Runner Origins #5',
+          summary: 'Nexus-4-replikant som börjar fungera fel och ställer en ensam fråga om och om igen, tills han dör inom några timmar.',
+          bio: [
+            'Arnault är en Nexus-4-replikant som tjänar i ett hem som tjänare. I #5 börjar han fungera fel och är på väg att attackera en boende i lägenheten, men Asa stoppar honom i tid.',
+            'Han upprepar ständigt frågan varför. Asa och Cal tar honom till La Plume Sauvage, där Divina tror att han kanske upplever en existentiell kris. Asa tvivlar på det eftersom Nexus-4:or enligt honom inte kan tänka så.',
+            'Arnault dör inom några timmar.'
+          ]
+        },
+        {
+          id: 'divina', from: 5, name: 'Divina', initials: 'DI', faction: 'others',
+          subtitle: 'Hjälpare på La Plume Sauvage', badge: 'LA PLUME SAUVAGE // KONTAKT',
+          born: 'Okänt', birthplace: 'Okänt', occupation: 'Okänt, knuten till La Plume Sauvage',
+          status: 'Delar information med Marcus och Asa (#6)', family: 'Okänt', affiliation: 'La Plume Sauvage',
+          firstAppearance: 'Blade Runner Origins #5',
+          summary: 'Hjälpare på La Plume Sauvage, där Asa och Marcus gömmer sig. Hon fungerar som en klok samtalspartner om identitet och förändring.',
+          bio: [
+            'Divina finns på La Plume Sauvage, platsen dit Asa tar Marcus Kine för säkerhets skull efter #4. I #5 tror hon att Arnaults felfunktion kan vara en existentiell kris, medan Asa betvivlar att en Nexus-4 kan tänka så.',
+            'I #6 delar hon viktig information med Marcus och Asa och för därefter ett samtal med Marcus om Asas förvandling. Det samtalet hjälper honom förstå identitet och förändring.'
+          ]
+        },
+        {
+          id: 'osha', from: 3, name: 'Osha', initials: 'OS', faction: 'tyrell',
+          subtitle: 'Ilora Stahls assistent', badge: 'TYRELL // ASSISTENT',
+          born: 'Okänt', birthplace: 'Okänt', occupation: 'Assistent åt Ilora Stahl',
+          status: 'I tjänst hos Stahl (#6)', family: 'Okänt', affiliation: 'Tyrell Corporation',
+          firstAppearance: 'Blade Runner Origins #3',
+          summary: 'Stahls assistent som håller henne informerad och hämtar henne när Eldon Tyrell kallar.',
+          bio: [
+            'Osha är Ilora Stahls assistent. I #3 hämtar hon Stahl efter spinnerkraschen så att hon hinner till videomötet med Eldon Tyrell.',
+            'I #6 är hon en del av Stahls apparat när Tyrell försöker hantera de växande replikantmorden.'
+          ]
+        },
+        {
+          id: 'gutman', from: 6, name: 'Sgt. Gutman', initials: 'GU', faction: 'lapd',
+          subtitle: 'Korrupt LAPD-sergeant', badge: 'LAPD // SERGEANT',
+          born: 'Okänt', birthplace: 'Okänt', occupation: 'Sergeant, LAPD',
+          status: 'I konflikt med Stahl (#6)', family: 'Okänt', affiliation: 'LAPD',
+          firstAppearance: 'Blade Runner Origins #6',
+          summary: 'Korrupt polis som gör kårens smutsiga arbete och vägrar tvätta bort Tyrells problem åt Stahl.',
+          bio: [
+            'Sergeant Gutman är en korrupt LAPD-polis som tillåter kåren att blunda för det som inte passar. I #6 träffar Stahl honom för att få honom att mörklägga dödsfallen kring Nexus-5-fallet.',
+            'Gutman vägrar och föreslår att hon i stället ska få Cal Moreaux att ta hand om det. Relationen mellan honom och Stahl blir ansträngd.'
+          ]
+        },
+        {
+          id: 'carlisle', from: 6, name: 'Carlisle', initials: 'CA', faction: 'others',
+          subtitle: 'Ledare för en grupp i slummen', badge: 'SLUMMEN // LEDARE',
+          born: 'Okänt', birthplace: 'Los Angeles slum (antas)', occupation: 'Ledare för en grupp i slummen',
+          status: 'Har misshandlat Cal Moreaux (#6)', family: 'Brodern Eason (försvunnen)', affiliation: 'Slummen',
+          firstAppearance: 'Blade Runner Origins #6',
+          summary: 'Slumgrupp-ledare som tror att Cal arbetar åt Tyrell, bolaget han skyller för sin brors försvinnande.',
+          bio: [
+            'Carlisle leder en grupp i slummen, Cals gamla hemtrakter. Han skyller Tyrell Corporation för att hans bror Eason försvunnit och tror därför att Cal samarbetar med bolaget.',
+            'I #6 tillfångatar hans folk Cal. Carlisle slår honom nästan till döds, tills Cal får förklara att han inte är fienden.'
+          ]
+        },
+        {
+          id: 'des', from: 6, name: 'Des (Desiree)', initials: 'DE', faction: 'others',
+          subtitle: 'Medlem i Carlisles grupp', badge: 'SLUMMEN // MEDLEM',
+          born: 'Okänt', birthplace: 'Okänt', occupation: 'Okänt',
+          status: 'Lyssnar på Cal Moreaux (#6)', family: 'Okänt', affiliation: 'Carlisles grupp i slummen',
+          firstAppearance: 'Blade Runner Origins #6',
+          summary: 'Carlisles närmaste i slummen. Hon diskuterar Cals förflutna med honom och hör hans förklaring.',
+          bio: [
+            'Desiree, kallad Des, hör till Carlisles grupp i slummen. I #6 diskuterar hon Cals förflutna med Carlisle efter att gruppen tagit honom till fånga.',
+            'Cal förklarar för både henne och Carlisle att han inte är deras fiende, även om de tvivlar.'
           ]
         }
       ],
 
       locations: [
-        {
-          id: 'tyrell-corp-2009',
-          name: 'Tyrell Corporation (2009)',
-          type: 'FÖRETAG // HÖGKVARTER',
-          sector: 'Centrala Los Angeles',
-          firstAppearance: 'Origins #1',
-          description: 'Föregångaren till det megaföretag som senare ska dominera världen. År 2009 består komplexet av högteknologiska men slutna forskningslaboratorier där Eldon Tyrell och hans team utvecklar tidig syntetisk vävnad och cybernetik under strikt sekretess, samtidigt som privata jaktenheter dirigeras härifrån för att tysta läckor.'
-        },
-        {
-          id: 'lapd-2009',
-          name: 'LAPD (Los Angeles Police Department)',
-          type: 'MYNDIGHET // POLISKÅR',
-          sector: 'Downtown LA',
-          firstAppearance: 'Origins #1',
-          description: 'Poliskåren i ett allt mer överbefolkat, förorenat och regndränkt Los Angeles år 2009. Den särskilda Blade Runner-enheten existerar ännu inte; istället hanteras företagsrelaterade brott av vanliga mordutredare som Cal Moreaux under hård press från storföretagen.'
-        },
-        {
-          id: 'kines-secret-lab',
-          name: 'Dr. Lydia Kines Hemliga Labb',
-          type: 'PLATS // DOLT LABORATORIUM',
-          sector: 'Industriområdet / Sector 4',
-          firstAppearance: 'Origins #2',
-          description: 'Ett undangömt, oregistrerat laboratorium utanför Tyrell Corporations officiella lokaler. Här utförde Dr. Lydia Kine sina mest kontroversiella experiment på mänskliga försökspersoner — där hon opererade in nackimplantat och modifierade levande subjekt som ett mellansteg mot syntetiska Nexus-prototyper.'
-        },
-        {
-          id: 'la-back-alleys',
-          name: 'Los Angeles Bakgator / Sector 4',
-          type: 'OMRÅDE // STADSDEL',
-          sector: 'Sector 4, Los Angeles',
-          firstAppearance: 'Origins #1',
-          description: 'Neondränkta, ständigt regntunga gränder fyllda med gatukök, trånga bostadskvarter och skumraskaffärer. Här gömmer sig Markus Kine, Asa och Nia undan Tyrells övervakning och säkerhetsstyrkor.'
-        },
-        {
-          id: 'abandoned-industrial-hideout',
-          name: 'Rymlingarnas Gömställe (Övergivna Industriområdet)',
-          type: 'PLATS // TILLFÄLLIGT SKYDD',
-          sector: 'Yttre Slummen / Industri-zonen',
-          firstAppearance: 'Origins #5',
-          description: 'En förfallen, regnpiskad industribyggnad i Los Angeles slumkvarter där Effie, Ilora, Kallie och de andra förrymda försökspersonerna söker skydd undan Tyrell Corps jaktenheter — och där den våldsamma eldstriden i Origins #5 bryter ut.'
-        },
-        {
-          id: 'black-market-clinics',
-          name: 'Black Market Clinics',
-          type: 'PLATS // UNDERJORDISK KLINIK',
-          sector: 'Los Angeles Undre Värld',
-          firstAppearance: 'Origins #3',
-          description: 'Illegala medicinska och cybernetiska kliniker som drivs i stadens skuggor. I Origins #3 och #4 leder spåren hit när Cal Moreaux kartlägger hur försökspersoner behandlats och var Lydia Kines utrustning hamnat.'
-        }
+        { id: 'tyrell-hq', name: 'Tyrell Corporation', type: 'FÖRETAG // HÖGKVARTER', sector: 'Los Angeles', firstAppearance: '#1',
+          description: 'Bioteknikbolaget som tagit robotar till Nexus-fasen. Här hittas Lydia Kine död i sitt låsta laboratorium, och härifrån rymmer en Nexus-5.' },
+        { id: 'lapd', name: 'LAPD', type: 'MYNDIGHET // POLISKÅR', sector: 'Los Angeles', firstAppearance: '#1',
+          description: 'Los Angeles polis. Cal utreder här Lydias död, men korrupta sergeanter som Gutman blundar för det som inte passar.' },
+        { id: 'kine-apartment', name: 'Lydia Kines lägenhet', type: 'PLATS // BOSTAD', sector: 'Los Angeles', firstAppearance: '#3',
+          description: 'Här förvaras Lydias teckningar av Asa. Cal ställer Asa mot väggen här i #4 och jakten sträcker sig vidare till ett museum.' },
+        { id: 'la-plume-sauvage', name: 'La Plume Sauvage', type: 'PLATS // TILLFLYKT', sector: 'Los Angeles', firstAppearance: '#4',
+          description: 'Dit Asa och Cal tar Marcus för hans säkerhet. Divina finns här, och även den felfungerande Arnault förs hit.' },
+        { id: 'the-slums', name: 'Slummen', type: 'OMRÅDE // STADSDEL', sector: 'Los Angeles', firstAppearance: '#6',
+          description: 'En eftersatt och bortglömd del av Los Angeles, Cals hemtrakter. Här möter han Carlisles grupp i #6.' },
+        { id: 'kalanthia', name: 'Kalanthia', type: 'PLATS // OFF-WORLD-KOLONI', sector: 'Off-world', firstAppearance: '#1',
+          description: 'Off-world-koloni där en blodig belägring 2007 involverade replikanter. Cal var med och bär PTSD därifrån.' }
       ],
 
       events: [
-        {
-          id: 'event-1',
-          issue: '#1',
-          year: '2009',
-          title: 'Dr. Lydia Kines mystiska död',
-          description: 'Tyrell-forskaren Dr. Lydia Kine hittas död i sitt laboratorium. LAPD-detektiven Cal Moreaux kallas till platsen och upptäcker snabbt att det iscensatta självmordet döljer en omfattande mörkläggning från Tyrell Corporation.'
-        },
-        {
-          id: 'event-2',
-          issue: '#1',
-          year: '2009',
-          title: 'Ilora Stahl tar över brottsplatsen',
-          description: 'Tyrells säkerhetschef Ilora Stahl dyker upp och försöker stänga ute polisen. Cal säkrar i hemlighet krypterade ledtrådar innan företaget hinner rensa laboratoriet.'
-        },
-        {
-          id: 'event-3',
-          issue: '#2',
-          year: '2009',
-          title: 'Spåren leder till Markus Kine och Asa',
-          description: 'Utredningen tar Cal ut i Los Angeles bakgator där han stöter på den gåtfulle Asa och inser att Lydias bror, Markus Kine, är på flykt med avgörande delar av systerns hemliga forskning.'
-        },
-        {
-          id: 'event-4',
-          issue: '#3',
-          year: '2009',
-          title: 'Avslöjandet om de mänskliga försökspersonerna',
-          description: 'I Lydia Kines hemliga labb och stadens black market-kliniker upptäcker Cal den mörka sanningen: Lydia använde utsatta människor som försökspersoner, och Asa visar sig vara en tidig syntetisk konstruktion.'
-        },
-        {
-          id: 'event-5',
-          issue: '#4',
-          year: '2009',
-          title: 'Mötet med Nia i Sector 4',
-          description: 'Cal spårar upp Nia, en av Lydias försökspersoner som utvecklat övermänsklig styrka. Samtidigt trappar Ilora Stahl upp jakten med beväpnade styrkor för att eliminera alla vittnen.'
-        },
-        {
-          id: 'event-6',
-          issue: '#4',
-          year: '2009',
-          title: 'Konfrontation och skärpt konflikt',
-          description: 'Gränsen mellan polisutredning och överlevnad suddas ut när Cal tvingas skydda de inblandade mot Tyrell Corporations privata agenter — med Markus Kine fortfarande som nyckeln till hela gåtan.'
-        },
-        {
-          id: 'event-7',
-          issue: '#5',
-          year: '2009',
-          title: 'Jakten på rymlingarna intensifieras',
-          description: 'Tyrell Corporations säkerhetsstyrkor skickas ut i Los Angeles mörka bakgator och slumområden med order att spåra upp och tysta Effie, Ilora, Kallie och de övriga försökspersonerna som flytt från Lydias hemliga labb.'
-        },
-        {
-          id: 'event-8',
-          issue: '#5',
-          year: '2009',
-          title: 'Sanningen om offren bakom experimenten',
-          description: 'Cal Moreaux nystar vidare i spåren efter de försvunna människorna och inser att de jagade "avvikarna" i själva verket är levande mänskliga offer som modifierats med nackimplantat i Lydias försök att skapa syntetiskt liv.'
-        },
-        {
-          id: 'event-9',
-          issue: '#5',
-          year: '2009',
-          title: 'Kampen mot biverkningar och identitetskris',
-          description: 'I sitt gömställe i de övergivna industriområdena kämpar rymlingarna — ledda och skyddade av Effie — med fragmenterade minnen, fysiska biverkningar och sina nya övermänskliga förmågor medan de jagas som djur.'
-        },
-        {
-          id: 'event-10',
-          issue: '#5',
-          year: '2009',
-          title: 'Eldstrid i industriområdet',
-          description: 'En våldsam sammandrabbning bryter ut när Tyrells tungt beväpnade agenter lokaliserar rymlingarnas gömställe. Cal Moreaux ingriper i korselden och tvingas välja sida för att rädda gruppen från att likvideras.'
-        }
+        { id: 'ev-1', issue: '#1', year: 2009, title: 'Lydia Kine hittas död', description: 'Dr. Lydia Kine hittas hängd i sitt låsta laboratorium. Cal Moreaux får uppdraget att avsluta fallet snabbt och tyst, men tror inte på självmordet. Slutet av numret visar en attack mot Cal och Marcus.' },
+        { id: 'ev-2', issue: '#2', year: 2009, title: 'Spinnern attackeras', description: 'Tyrell hämtar Marcus från polisstationen, men färden slutar i en attack och krasch, och Marcus räddas av en replikant.' },
+        { id: 'ev-3', issue: '#3', year: 2009, title: 'Asa är Lydia', description: 'Räddaren visar sig vara Asa, en replikant med Lydias medvetande. Stahl hittar filer som avslöjar att Lydia upptäckt medvetandeöverföring.' },
+        { id: 'ev-4', issue: '#4', year: 2009, title: 'Jakten på museet och Effies död', description: 'Cal ställer Asa i Lydias lägenhet och jagar honom till ett museum, där Effie skjuts ihjäl av Stahl. Cal och Asa går samman.' },
+        { id: 'ev-5', issue: '#5', year: 2009, title: 'Arnaults död', description: 'Cal har lämnat LAPD men sitter fast hos Tyrell. Han och Asa stoppar den felfungerande Arnault, som dör inom timmar. Stahl konfronteras av Cal på sjukhuset.' },
+        { id: 'ev-6', issue: '#6', year: 2009, title: 'Slummen och smittan', description: 'En ny Nexus-4 dödar sin ägare. Stahl möter Gutman, Asa och Marcus blir attackerade, och Cal misshandlas av Carlisles grupp i slummen.' }
       ],
 
       timeline: [
-        {
-          id: 'era-1',
-          period: '1990-TALET – TIDIGT 2000-TAL',
-          eraTag: 'EKOLOGISK KOLLAPS',
-          title: 'Massutrotning & syntetiska djur',
-          description: 'Globala klimatförändringar, radioaktivt nedfall och skenande föroreningar orsakar en massiv ekologisk kollaps. Nästan alla vilda djurarter utrotas, vilket driver fram den första vågen av syntetiska replikdjur och artificiell bioteknik.'
-        },
-        {
-          id: 'era-2',
-          period: '~2001 – 2005',
-          eraTag: 'TYRELL CORPORATION',
-          title: 'Eldon Tyrell grundar sitt bioteknikimperium',
-          description: 'Den geniale forskaren Dr. Eldon Tyrell grundar Tyrell Corporation i Los Angeles. Företaget tar snabbt ledningen inom genetisk design, syntetiska organ och tidig artificiell intelligens.'
-        },
-        {
-          id: 'era-3',
-          period: '~2006 – 2008',
-          eraTag: 'NEXUS 1–3 PROTOTYPER',
-          title: 'De första arbetsmodellerna för Off-World',
-          description: 'I takt med att jorden blir allt mer obeboelig expanderar mänskligheten till rymdkolonierna (Off-world). Tyrell utvecklar de tidiga modellerna Nexus-1 till Nexus-3 — primitiva, biologiskt instabila arbetsenheter byggda för extremt farliga uppdrag.'
-        },
-        {
-          id: 'era-4',
-          period: 'OKTOBER 2009',
-          eraTag: 'N4-GENOMBROTTET',
-          title: 'Födelsen av den moderna replikanten',
-          description: 'Dr. Lydia Kine lyckas i hemlighet utveckla det första stabila syntetiska nervsystemet genom oetiska experiment på mänskliga försökspersoner i Los Angeles. För första gången suddas den biologiska gränsen mellan människa och syntetisk skapelse ut (grunden till Nexus-4).'
-        },
-        {
-          id: 'era-5',
-          period: 'NOVEMBER 2009',
-          eraTag: 'ORIGINS-KONFLIKTEN',
-          title: 'Lydia Kines död & den väpnade jakten på prototyperna',
-          description: 'Dr. Lydia Kine mördas och Tyrell Corp försöker dölja spåren efter hennes förbjudna forskning. LAPD-detektiven Cal Moreaux avslöjar att företaget utfört olagliga mänskliga experiment, och en väpnad jakt bryter ut i Los Angeles när Tyrells styrkor försöker likvidera de första förrymda prototyperna och försökspersonerna — händelserna som direkt lägger grunden för den framtida Blade Runner-enheten.'
-        }
+        { id: 'era-1', period: 'ÅR 2007', eraTag: 'KALANTHIA', title: 'Belägringen av Kalanthia', description: 'En blodig replikantattack på off-world-kolonin Kalanthia. Cal Moreaux överlever.' },
+        { id: 'era-2', period: 'ÅR 2009', eraTag: 'ORIGINS', title: 'Lydia Kines död och Tyrells hemliga forskning', description: 'Medvetandeöverföring och Nexus-5-prototypen avslöjas när Cal utreder Lydias död. Han slutar vid LAPD och tvingas arbeta åt Tyrell.' },
+        { id: 'era-3', period: 'ÅR 2009', eraTag: 'ORIGINS', title: 'Nexus-4-smittan', description: 'Nexus-4-replikanter börjar fungera fel och mörda sina ägare, till Tyrells förtret.' }
       ]
     };
+
+    // ===== LÄSLÄGE: ändra bara READ när du läst nästa nummer =====
+    const READ = 6;
+    const TOTAL = 12;
+    // Poster utan "from" visas alltid. Poster med from: N visas först när READ >= N.
+    Object.keys(ARCHIVE_DATA).forEach((k) => {
+      if (Array.isArray(ARCHIVE_DATA[k])) ARCHIVE_DATA[k] = ARCHIVE_DATA[k].filter((x) => (x.from || 1) <= READ);
+    });
+    function applyReadMode() {
+      const pct = Math.round((READ / TOTAL) * 100);
+      document.getElementById('hdr-lock').textContent = `SPOILER-SKYDD AKTIVT: ORIGINS #${READ} (2009)`;
+      document.getElementById('hdr-prog').textContent = `${READ} / ${TOTAL} NUMMER (${pct} %)`;
+      document.getElementById('hdr-bar').style.width = pct + '%';
+      document.getElementById('hdr-after').textContent = `LÅST EFTER #${READ}`;
+    }
+
+    const LINKS = [['Cal Moreaux','cal-moreaux'],['Cal','cal-moreaux'],['Lydia Kine','lydia-kine'],['Lydia','lydia-kine'],['Marcus Kine','markus-kine'],['Marcus','markus-kine'],['Effie Koropey','effie-koropey'],['Effie','effie-koropey'],['Ilora Stahl','ilora-stahl'],['Stahl','ilora-stahl'],['Eldon Tyrell','eldon-tyrell'],['Eldon','eldon-tyrell'],['Asa','asa'],['Arnault','arnault'],['Nia','nia'],['Divina','divina'],['Osha','osha'],['Gutman','gutman'],['Desiree','des'],['Des','des'],['Carlisle','carlisle']];
+    const LINK_MAP = Object.fromEntries(LINKS);
+    const LINK_RE = new RegExp('\\b(' + LINKS.map((l) => l[0]).join('|') + ')\\b', 'g');
+    function linkify(text, selfId) {
+      const visible = new Set(ARCHIVE_DATA.characters.map((c) => c.id));
+      return text.replace(LINK_RE, (m) => {
+        const id = LINK_MAP[m];
+        if (id === selfId || !visible.has(id)) return m;
+        return `<button type="button" onclick="openCharacterModal('${id}')" class="text-noir-cyan underline decoration-dotted underline-offset-2 hover:text-noir-amberBright cursor-pointer">${m}</button>`;
+      });
+    }
 
     let state = {
       activeTab: 'characters',
@@ -876,13 +805,29 @@
     };
 
     window.addEventListener('DOMContentLoaded', () => {
+      applyReadMode();
       updateBadges();
-      renderList();
+      switchTab('characters');
     });
+
+    const isCompany = (l) => /^(FÖRETAG|MYNDIGHET)/.test(l.type);
+    const getCompanies = () => ARCHIVE_DATA.locations.filter(isCompany);
+    const getPlaces = () => ARCHIVE_DATA.locations.filter((l) => !isCompany(l));
+    const TAB_TITLES = { characters: 'KARAKTÄRER', companies: 'FÖRETAG', locations: 'PLATSER', events: 'HÄNDELSER', timeline: 'TIDSLINJE' };
+
+    function toggleMenu(force) {
+      const panel = document.getElementById('menu-panel');
+      const back = document.getElementById('menu-backdrop');
+      const open = typeof force === 'boolean' ? force : panel.classList.contains('hidden');
+      panel.classList.toggle('hidden', !open);
+      back.classList.toggle('hidden', !open);
+      document.getElementById('menu-btn').setAttribute('aria-expanded', open);
+    }
 
     function updateBadges() {
       document.getElementById('badge-characters').textContent = ARCHIVE_DATA.characters.length;
-      document.getElementById('badge-locations').textContent = ARCHIVE_DATA.locations.length;
+      document.getElementById('badge-companies').textContent = getCompanies().length;
+      document.getElementById('badge-locations').textContent = getPlaces().length;
       document.getElementById('badge-events').textContent = ARCHIVE_DATA.events.length;
       document.getElementById('badge-timeline').textContent = ARCHIVE_DATA.timeline.length;
     }
@@ -893,18 +838,21 @@
         closeCharacterModal(false);
       }
 
-      const tabs = ['characters', 'locations', 'events', 'timeline'];
+      const tabs = ['characters', 'companies', 'locations', 'events', 'timeline'];
       tabs.forEach((t) => {
         const btn = document.getElementById(`tab-${t}`);
         const badge = document.getElementById(`badge-${t}`);
+        const base = 'tab-btn w-full flex items-center justify-between gap-3 px-4 py-3 font-mono text-[12.5px] tracking-[0.08em] uppercase text-left cursor-pointer transition-colors ';
         if (t === tabName) {
-          btn.className = 'tab-btn flex-shrink-0 flex items-center gap-2 px-3.5 py-2 rounded-xl font-mono text-[12px] font-bold tracking-[0.06em] uppercase transition-all cursor-pointer bg-noir-amber text-[#0A0D14] shadow-md';
+          btn.className = base + 'font-bold bg-noir-amber text-[#0A0D14]';
           badge.className = 'px-1.5 py-0.5 rounded-md text-[11px] font-extrabold bg-black/20 text-[#0A0D14]';
         } else {
-          btn.className = 'tab-btn flex-shrink-0 flex items-center gap-2 px-3.5 py-2 rounded-xl font-mono text-[12px] font-semibold tracking-[0.06em] uppercase transition-all cursor-pointer bg-noir-card border border-noir-border text-noir-muted hover:text-white';
+          btn.className = base + 'font-semibold text-noir-muted hover:text-white hover:bg-noir-cardHover';
           badge.className = 'px-1.5 py-0.5 rounded-md text-[11px] font-bold bg-[#1B2334] text-slate-300';
         }
       });
+      document.getElementById('section-title').textContent = TAB_TITLES[tabName];
+      toggleMenu(false);
 
       renderList();
     }
@@ -1008,14 +956,14 @@
         }
 
         filtered.forEach((char) => {
-          const customImg = portraits[char.id];
+          const customImg = portraits[char.id] || char.image;
           const card = document.createElement('button');
           card.type = 'button';
           card.onclick = () => openCharacterModal(char.id);
           card.className = 'w-full text-left rounded-xl bg-noir-card hover:bg-noir-cardHover border border-noir-border hover:border-noir-amber/50 p-3.5 transition-all flex items-center gap-3.5 group cursor-pointer active:scale-[0.99]';
 
           const avatarHtml = customImg
-            ? `<img src="${customImg}" alt="${char.name}" class="w-14 h-16 rounded-lg object-cover border border-noir-amber/40 flex-shrink-0" />`
+            ? `<img src="${customImg}" alt="${char.name}" class="w-14 h-16 rounded-lg object-cover object-top border border-noir-amber/40 flex-shrink-0" />`
             : `<div class="w-14 h-16 rounded-lg bg-[#0B0F17] border border-noir-border group-hover:border-noir-amber/40 flex flex-col items-center justify-center flex-shrink-0 scanlines">
                  <span class="font-mono text-sm font-extrabold text-noir-amber">${char.initials}</span>
                  <span class="font-mono text-[8px] text-noir-muted mt-0.5">DOSSIER</span>
@@ -1026,7 +974,7 @@
             <div class="flex-1 min-w-0">
               <div class="flex items-center justify-between gap-2 mb-0.5">
                 <span class="font-mono text-[10px] font-bold tracking-[0.07em] text-noir-cyan uppercase truncate">${char.badge}</span>
-                <span class="font-mono text-[11px] text-noir-amber opacity-80 group-hover:translate-x-0.5 transition-transform">WIKI →</span>
+                <span class="font-mono text-[11px] text-noir-amber opacity-80 group-hover:translate-x-0.5 transition-transform">ARCHIVE →</span>
               </div>
               <h3 class="font-mono text-[15px] font-bold text-white group-hover:text-noir-amberBright transition-colors truncate">
                 ${char.name}
@@ -1038,8 +986,9 @@
           `;
           container.appendChild(card);
         });
-      } else if (state.activeTab === 'locations') {
-        const filtered = ARCHIVE_DATA.locations.filter((loc) => {
+      } else if (state.activeTab === 'locations' || state.activeTab === 'companies') {
+        const source = state.activeTab === 'companies' ? getCompanies() : getPlaces();
+        const filtered = source.filter((loc) => {
           return (
             loc.name.toLowerCase().includes(q) ||
             loc.type.toLowerCase().includes(q) ||
@@ -1049,7 +998,7 @@
         });
 
         if (filtered.length === 0) {
-          container.innerHTML = renderEmptyState('Inga platser eller företag matchade din sökning.');
+          container.innerHTML = renderEmptyState(state.activeTab === 'companies' ? 'Inga företag matchade din sökning.' : 'Inga platser matchade din sökning.');
           return;
         }
 
@@ -1209,7 +1158,7 @@
       }
 
       const bioContainer = document.getElementById('detail-bio');
-      bioContainer.innerHTML = char.bio.map((p) => `<p>${p}</p>`).join('');
+      bioContainer.innerHTML = char.bio.map((p) => `<p>${linkify(p, char.id)}</p>`).join('');
 
       updateDetailPortraitUI(characterId);
 
@@ -1229,7 +1178,8 @@
 
     function updateDetailPortraitUI(characterId) {
       const portraits = loadPortraits();
-      const imgData = portraits[characterId];
+      const own = portraits[characterId];
+      const imgData = own || (ARCHIVE_DATA.characters.find((c) => c.id === characterId) || {}).image;
       const imgEl = document.getElementById('detail-portrait-img');
       const placeholderEl = document.getElementById('detail-portrait-placeholder');
       const resetBtn = document.getElementById('reset-portrait-btn');
@@ -1238,7 +1188,7 @@
         imgEl.src = imgData;
         imgEl.classList.remove('hidden');
         placeholderEl.classList.add('hidden');
-        resetBtn.classList.remove('hidden');
+        resetBtn.classList.toggle('hidden', !own);
       } else {
         imgEl.src = '';
         imgEl.classList.add('hidden');
@@ -1297,7 +1247,7 @@
     function exportBackup() {
       const portraits = loadPortraits();
       const backupPayload = {
-        app: 'BLADE RUNNER // CANON WIKI',
+        app: 'BLADE RUNNER // CANON ARCHIVE',
         version: '1.7',
         exportedAt: new Date().toISOString(),
         portraits: portraits
@@ -1307,7 +1257,7 @@
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'blade-runner-canon-wiki-backup-v1.7.json';
+      a.download = 'blade-runner-canon-archive-backup-v1.7.json';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
