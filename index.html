@@ -490,7 +490,7 @@
           born: 'Okänt',
           birthplace: 'Okänt',
           occupation: 'Detektiv (LAPD), har lämnat kåren i #5',
-          status: 'Under Tyrells tryck. Misshandlad av Carlisles grupp i slummen (#6)',
+          status: 'Har funnit Nexus-5:an: sin egen syster Nia (#7)',
           family: 'Systern Nia (inlagd på sjukhus)',
           affiliation: 'LAPD (avgått) / bunden till Tyrell Corp',
           firstAppearance: 'Blade Runner Origins #1',
@@ -501,7 +501,8 @@
             'I #2 och #3 växer misstanken mot Tyrell. Cal gömmer Effie Koropey, Lydias kollega, i ett gömställe och söker igenom Lydias lägenhet. Där ställer han Asa, replikanten som räddade Marcus, mot väggen.',
             'I #4 jagar Cal Asa över hustak, gator och in på ett museum. Effie skjuts ihjäl av Stahl, som sedan beordrar Cal att eliminera en förrymd Nexus-5 och hitta Marcus. Cal inser att Asa inte är Nexus-5:an och de går samman.',
             'I #5 har Cal lämnat LAPD men sitter fast i Tyrells krav. Tillsammans med Asa tar han hand om den felfungerande Nexus-4:an Arnault, som dör inom några timmar. Därefter besöker han Nia på sjukhuset, där Stahl konfronterar honom och han vräker ur sig sin ilska mot henne.',
-            'I #6 återvänder Cal till slummen, där han växte upp. Carlisles grupp tror att han arbetar åt Tyrell och slår honom nästan till döds, tills han får förklara att han inte är fienden. Gutman föreslår dessutom att Stahl ska få just Cal att mörklägga morden.'
+            'I #6 återvänder Cal till slummen, där han växte upp. Carlisles grupp tror att han arbetar åt Tyrell och slår honom nästan till döds, tills han får förklara att han inte är fienden. Gutman föreslår dessutom att Stahl ska få just Cal att mörklägga morden.',
+            'I #7 följer Cal upprorets spår till Sektor 6B och får veta att den förrymda Nexus-5:an som han och Tyrell har jagat är hans egen syster, Nia. Det gör jakten personlig, och han tvingas välja sida.'
           ]
         },
         {
@@ -642,19 +643,20 @@
           name: 'Nia Moreaux',
           initials: 'NM',
           faction: 'others',
-          subtitle: 'Cal Moreauxs syster',
-          badge: 'FAMILJ // PATIENT',
+          subtitle: 'Cals syster och den förrymda Nexus-5:an',
+          badge: 'REPLIKANT // NEXUS-5',
           born: 'Okänt',
           birthplace: 'Okänt',
-          occupation: 'Okänt',
-          status: 'Inlagd på sjukhus, katatonisk (#5)',
+          occupation: 'Nexus-5-replikant, ledare för en grupp replikanter',
+          status: 'På fri fot i slummen, väcker andra replikanter (#7)',
           family: 'Cal Moreaux (bror)',
-          affiliation: 'Ingen',
-          firstAppearance: 'Blade Runner Origins #1',
-          summary: 'Cals syster, som ligger på sjukhus i katatoniskt tillstånd och är en stor del av hans oro.',
+          affiliation: 'Egen grupp av replikanter',
+          firstAppearance: 'Blade Runner Origins #1 (omnämnd). Dyker upp som Nexus-5 i #7',
+          summary: 'Cals syster, som först ligger katatonisk på sjukhus. I #7 visar det sig att hon är den förrymda Nexus-5:an Tyrell jagar.',
           bio: [
-            'Nia Moreaux är Cal Moreauxs syster. I #1 framgår att hon befinner sig i ett katatoniskt tillstånd och att Cal oroar sig mycket för henne.',
-            'I #5 besöker Cal henne på sjukhuset. Där konfronterar Stahl honom.',
+            'Nia Moreaux är Cal Moreauxs syster. I #1 framgår att hon befinner sig i ett katatoniskt tillstånd, och i #5 besöker Cal henne på sjukhuset där Stahl konfronterar honom.',
+            'I #7 avslöjas bedrägeriet: Nia är den förrymda Nexus-5:an som Tyrell Corporation och Cal har jagat. Cal följer upprorets spår till Sektor 6B, slummen i Los Angeles som hans bricka har gjort honom landsförvisad från, och får där veta vem hon är.',
+            'Som Nexus-5 har Nia väckt andra replikanter ur deras tjänst till självmedvetenhet och frihet. Hon leder en liten grupp som vill börja ett nytt liv, men det sker inte utan skadliga följder för andra.',
             'Mer om hennes bakgrund hålls dolt tills du har läst vidare.'
           ]
         },
@@ -751,8 +753,8 @@
           description: 'Här förvaras Lydias teckningar av Asa. Cal ställer Asa mot väggen här i #4 och jakten sträcker sig vidare till ett museum.' },
         { id: 'la-plume-sauvage', name: 'La Plume Sauvage', type: 'PLATS // TILLFLYKT', sector: 'Los Angeles', firstAppearance: '#4',
           description: 'Dit Asa och Cal tar Marcus för hans säkerhet. Divina finns här, och även den felfungerande Arnault förs hit.' },
-        { id: 'the-slums', name: 'Slummen', type: 'OMRÅDE // STADSDEL', sector: 'Los Angeles', firstAppearance: '#6',
-          description: 'En eftersatt och bortglömd del av Los Angeles, Cals hemtrakter. Här möter han Carlisles grupp i #6.' },
+        { id: 'the-slums', name: 'Slummen (Sektor 6B)', type: 'OMRÅDE // STADSDEL', sector: 'Los Angeles', firstAppearance: '#6',
+          description: 'En eftersatt och bortglömd del av Los Angeles, Cals hemtrakter och landsförvisningsplats, Sektor 6B. Här möter han Carlisles grupp i #6 och får veta vem Nexus-5:an är i #7.' },
         { id: 'kalanthia', name: 'Kalanthia', type: 'PLATS // OFF-WORLD-KOLONI', sector: 'Off-world', firstAppearance: '#1',
           description: 'Off-world-koloni där en blodig belägring 2007 involverade replikanter. Cal var med och bär PTSD därifrån.' }
       ],
@@ -763,20 +765,22 @@
         { id: 'ev-3', issue: '#3', year: 2009, title: 'Asa är Lydia', description: 'Räddaren visar sig vara Asa, en replikant med Lydias medvetande. Stahl hittar filer som avslöjar att Lydia upptäckt medvetandeöverföring.' },
         { id: 'ev-4', issue: '#4', year: 2009, title: 'Jakten på museet och Effies död', description: 'Cal ställer Asa i Lydias lägenhet och jagar honom till ett museum, där Effie skjuts ihjäl av Stahl. Cal och Asa går samman.' },
         { id: 'ev-5', issue: '#5', year: 2009, title: 'Arnaults död', description: 'Cal har lämnat LAPD men sitter fast hos Tyrell. Han och Asa stoppar den felfungerande Arnault, som dör inom timmar. Stahl konfronteras av Cal på sjukhuset.' },
-        { id: 'ev-6', issue: '#6', year: 2009, title: 'Slummen och smittan', description: 'En ny Nexus-4 dödar sin ägare. Stahl möter Gutman, Asa och Marcus blir attackerade, och Cal misshandlas av Carlisles grupp i slummen.' }
+        { id: 'ev-6', issue: '#6', year: 2009, title: 'Slummen och smittan', description: 'En ny Nexus-4 dödar sin ägare. Stahl möter Gutman, Asa och Marcus blir attackerade, och Cal misshandlas av Carlisles grupp i slummen.' },
+        { id: 'ev-7', issue: '#7', year: 2009, title: 'Nexus-5:an är Nia', description: 'Cal följer upprorets spår till Sektor 6B och upptäcker att den förrymda Nexus-5:an är hans syster Nia. Hon har väckt andra replikanter och leder en liten grupp.' }
       ],
 
       timeline: [
         { id: 'era-1', period: 'ÅR 2007', eraTag: 'KALANTHIA', title: 'Belägringen av Kalanthia', description: 'En blodig replikantattack på off-world-kolonin Kalanthia. Cal Moreaux överlever.' },
         { id: 'era-2', period: 'ÅR 2009', eraTag: 'ORIGINS', title: 'Lydia Kines död och Tyrells hemliga forskning', description: 'Medvetandeöverföring och Nexus-5-prototypen avslöjas när Cal utreder Lydias död. Han slutar vid LAPD och tvingas arbeta åt Tyrell.' },
-        { id: 'era-3', period: 'ÅR 2009', eraTag: 'ORIGINS', title: 'Nexus-4-smittan', description: 'Nexus-4-replikanter börjar fungera fel och mörda sina ägare, till Tyrells förtret.' }
+        { id: 'era-3', period: 'ÅR 2009', eraTag: 'ORIGINS', title: 'Nexus-4-smittan', description: 'Nexus-4-replikanter börjar fungera fel och mörda sina ägare, till Tyrells förtret.' },
+        { id: 'era-4', period: 'ÅR 2009', eraTag: 'ORIGINS', title: 'Nia leder ett replikantuppror', description: 'Nexus-5:an, Nia Moreaux, väcker replikanter ur tjänst och bygger en grupp i Sektor 6B.' }
       ]
     };
 
     // ===== LÄSLÄGE: ändra bara READ när du läst nästa nummer =====
     // Verk och framsteg. Lägg till nytt verk här när du läst det, t.ex. film: {name:'Blade Runner', short:'FILM', total:1}
     const WORKS = { origins: { name: 'Blade Runner Origins', short: 'ORIGINS', total: 12 } };
-    const PROGRESS = { origins: 6 };
+    const PROGRESS = { origins: 7 };
     const READ = PROGRESS.origins;
     const TOTAL = WORKS.origins.total;
     // Bilder (inbäddade, fungerar utan separata filer). Format: id: 'data:image/jpeg;base64,...'
