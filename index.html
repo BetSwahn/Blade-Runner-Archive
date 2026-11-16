@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html lang="sv" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#0A0D14" />
+  <title>BLADE RUNNER // ARCHIVE</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Orbitron (Blade Runner Display), JetBrains Mono & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&family=Orbitron:wght@700;800;900&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            noir: {
+              bg: '#0A0D14',
+              card: '#111622',
+              cardHover: '#161D2C',
+              border: '#1E2536',
+              amber: '#E5951A',
+              amberBright: '#F59E0B',
+              amberDark: '#261C0E',
+              amberBorder: '#593B12',
+              cyan: '#2DD4BF',
+              cyanBright: '#06B6D4',
+              cyanDark: '#10242A',
+              text: '#F8FAFC',
+              muted: '#8A94A6'
+            }
+          },
+          fontFamily: {
+            display: ['"Orbitron"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+            sans: ['"Inter"', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    * {
+      -webkit-tap-highlight-color: transparent;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #05070B;
+      color: #E2E8F0;
+      font-family: 'Inter', system-ui, sans-serif;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    /* Subtil scanline-textur för neo-noir-känsla */
+    .scanlines {
+      background: linear-gradient(
+        rgba(18, 16, 16, 0) 50%,
+        rgba(0, 0, 0, 0.25) 50%
+      );
+      background-size: 100% 4px;
+    }
+
+    /* Pulsande orange statuslampa */
+    @keyframes pulseAmber {
+      0%, 100% {
+        opacity: 1;
+        box-shadow: 0 0 12px rgba(229, 149, 26, 0.85), 0 0 4px rgba(245, 158, 11, 1);
+      }
+      50% {
+        opacity: 0.45;
+        box-shadow: 0 0 4px rgba(229, 149, 26, 0.3);
+      }
+    }
+
+    .pulse-dot {
+      animation: pulseAmber 2.4s infinite ease-in-out;
+    }
+
+    /* Dölj scrollbar i horisontell flikmeny */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* Progress bar gradient från amber till cyan */
+    .progress-gradient {
+      background: linear-gradient(90deg, #E5951A 0%, #F59E0B 45%, #2DD4BF 100%);
+    }
+
+    /* Mjuk övergång vid modal-öppning */
+    @keyframes fadeSlideUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-view {
+      animation: fadeSlideUp 0.22s ease-out forwards;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex justify-center bg-[#05070B] text-noir-text antialiased">
+
+  <!-- Huvudcontainer: Mobil-först (max-w-480px centrerad på desktop, fullbredd på mobil) -->
+  <div id="app" class="w-full max-w-[480px] min-h-screen bg-noir-bg border-x border-noir-border/60 flex flex-col relative shadow-2xl">
+
+    <!-- ==================== HEADER-SEKTION (SCROLLAR MED SIDAN) ==================== -->
+    <header class="px-4 pt-5 pb-4 border-b border-noir-border bg-noir-bg">
+      <!-- Översta raden: Pulsande orange prick + Blade Runner Display Titel -->
+      <div class="flex items-start gap-3.5 mb-3.5">
+        <div class="mt-2 flex-shrink-0">
+          <span class="block w-3 h-3 rounded-full bg-noir-amber pulse-dot"></span>
+        </div>
+        <div class="leading-none">
+          <h1 class="font-display text-[21px] sm:text-[24px] font-black tracking-[0.14em] text-[#F8FAFC] uppercase drop-shadow-[0_0_10px_rgba(248,250,252,0.12)]">
+            BLADE RUNNER
+          </h1>
+          <div class="font-display text-[20px] sm:text-[23px] font-black tracking-[0.14em] uppercase mt-1.5 flex items-center gap-2">
+            <span class="text-noir-amberBright drop-shadow-[0_0_8px_rgba(245,158,11,0.45)]">//</span>
+            <span class="text-[#F8FAFC]">ARCHIVE</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Spoiler-skydd box -->
+      <div class="w-full rounded-xl bg-noir-amberDark/90 border border-noir-amberBorder px-3.5 py-2.5 mb-3 flex items-center gap-3">
+        <!-- Hänglås-ikon (SVG) -->
+        <svg class="w-4 h-4 text-noir-amber flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+        <div class="font-mono text-[11px] sm:text-[11.5px] font-semibold tracking-[0.06em] text-noir-amberBright uppercase leading-snug">
+          SPOILER-SKYDD AKTIVT: T.O.M. ORIGINS #5 (2009)
+        </div>
+      </div>
+
+      <!-- Progress-kort -->
+      <div class="w-full rounded-xl bg-noir-card border border-noir-border px-3.5 py-3">
+        <!-- Rad 1 -->
+        <div class="flex items-center justify-between font-mono text-[11px] tracking-[0.06em] mb-2">
+          <span class="text-noir-muted uppercase">ORIGINS PROGRESS</span>
+          <span class="text-noir-amberBright font-bold">5 / 12 NUMMER (42 %)</span>
+        </div>
+
+        <!-- Progress bar (42%) -->
+        <div class="w-full h-1.5 bg-[#1B2232] rounded-full overflow-hidden mb-2.5">
+          <div class="h-full rounded-full progress-gradient transition-all duration-500" style="width: 41.67%;"></div>
+        </div>
+
+        <!-- Rad 2 -->
+        <div class="flex items-center justify-between font-mono text-[10.5px] tracking-[0.05em] text-noir-muted">
+          <span>KANON-VERK: 1 / 14 PÅGÅENDE</span>
+          <span class="text-slate-400">LÅST EFTER #5</span>
+        </div>
+      </div>
+    </header>
+          <span id="badge-characters" class="px-1.5 py-0.5 rounded-md text-[11px] font-extrabold bg-black/20 text-[#0A0D14]">10</span>
+        </button>
+
+        <button
+          id="tab-locations"
+          onclick="switchTab('locations')"
+          class="tab-btn flex-shrink-0 flex items-center gap-2 px-3.5 py-2 rounded-xl font-mono text-[12px] font-semibold tracking-[0.06em] uppercase transition-all cursor-pointer bg-noir-card border border-noir-border text-noir-muted hover:text-white"
+        >
+          <span>PLATSER &amp; FÖRETAG</span>
+          <span id="badge-locations" class="px-1.5 py-0.5 rounded-md text-[11px] font-bold bg-[#1B2334] text-slate-300">6</span>
+        </button>
+
+        <button
+          id="tab-events"
+          onclick="switchTab('events')"
+          class="tab-btn flex-shrink-0 flex items-center gap-2 px-3.5 py-2 rounded-xl font-mono text-[12px] font-semibold tracking-[0.06em] uppercase transition-all cursor-pointer bg-noir-card border border-noir-border text-noir-muted hover:text-white"
+        >
+          <span>HÄNDELSER</span>
+          <span id="badge-events" class="px-1.5 py-0.5 rounded-md text-[11px] font-bold bg-[#1B2334] text-slate-300">10</span>
+        </button>
+
+        <button
+          id="tab-locations"
+          onclick="switchTab('locations')"
+          class="tab-btn flex-shrink-0 flex items-center gap-2 px-3.5 py-2 rounded-xl font-mono text-[12px] font-semibold tracking-[0.06em] uppercase transition-all cursor-pointer bg-noir-card border border-noir-border text-noir-muted hover:text-white"
+        >
+          <span>PLATSER &amp; FÖRETAG</span>
+          <span id="badge-locations" class="px-1.5 py-0.5 rounded-md text-[11px] font-bold bg-[#1B2334] text-slate-300">5</span>
+        </button>
+
+        <button
+          id="tab-events"
+          onclick="switchTab('events')"
+          class="tab-btn flex-shrink-0 flex items-center gap-2 px-3.5 py-2 rounded-xl font-mono text-[12px] font-semibold tracking-[0.06em] uppercase transition-all cursor-pointer bg-noir-card border border-noir-border text-noir-muted hover:text-white"
+        >
+          <span>HÄNDELSER</span>
+          <span id="badge-events" class="px-1.5 py-0.5 rounded-md text-[11px] font-bold bg-[#1B2334] text-slate-300">6</span>
+        </button>
+
+        <button
+          id="tab-timeline"
+          onclick="switchTab('timeline')"
+          class="tab-btn flex-shrink-0 flex items-center gap-2 px-3.5 py-2 rounded-xl font-mono text-[12px] font-semibold tracking-[0.06em] uppercase transition-all cursor-pointer bg-noir-card border border-noir-border text-noir-muted hover:text-white"
+        >
+          <span>TIDSLINJE</span>
+          <span id="badge-timeline" class="px-1.5 py-0.5 rounded-md text-[11px] font-bold bg-[#1B2334] text-slate-300">5</span>
+        </button>
+      </nav>
+
+      <!-- Sökfält -->
+      <div class="relative">
+        <div class="absolute inset-y-0 left-3.5 flex items-center pointer-events-none text-noir-muted">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </div>
+        <input
+          id="search-input"
+          type="search"
+          placeholder="Sök i arkivet..."
+          oninput="handleSearch(this.value)"
+          class="w-full bg-noir-card border border-noir-border focus:border-noir-amber/70 focus:outline-none rounded-xl pl-10 pr-9 py-2.5 font-mono text-[13px] text-slate-100 placeholder-noir-muted transition-colors"
+        />
+        <button
+          id="clear-search-btn"
+          onclick="clearSearch()"
+          class="hidden absolute inset-y-0 right-2.5 flex items-center px-1.5 text-noir-muted hover:text-white font-mono text-xs"
+          aria-label="Rensa sökning"
+        >
+          ✕
+        </button>
+      </div>
+    </section>
+
+    <!-- ==================== HUVUDINNEHÅLL (LISTVY) ==================== -->
+    <main id="main-list-view" class="flex-1 px-4 py-4 space-y-4 animate-view">
+
+      <!-- Underkategorier / Fraktionsfilter (visas endast under fliken KARAKTÄRER) -->
+      <div id="character-subfilters" class="flex items-center gap-2 overflow-x-auto no-scrollbar py-0.5"></div>
+
+      <!-- Dynamisk innehållslista -->
+      <div id="content-container" class="space-y-3"></div>
+    </main>
+
+    <!-- ==================== DETALJVY / WIKI-SIDA (KARAKTÄR) ==================== -->
+    <section id="character-detail-view" class="hidden flex-1 px-4 py-4 space-y-4 animate-view">
+      <!-- Tillbaka-knapp -->
+      <button
+        onclick="closeCharacterModal()"
+        class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-noir-card hover:bg-noir-cardHover border border-noir-border font-mono text-[12px] font-bold tracking-[0.07em] text-noir-amberBright uppercase transition-colors cursor-pointer"
+      >
+        <span>← TILLBAKA TILL ARKIVET</span>
+        <span id="detail-issue-tag" class="text-[10.5px] text-noir-cyan">CANON // 2009</span>
+      </button>
+
+      <!-- Karaktärs-kort -->
+      <div class="rounded-2xl bg-noir-card border border-noir-border overflow-hidden shadow-xl">
+        <!-- Topp-banner med porträtt & bilduppladdning -->
+        <div class="p-4 border-b border-noir-border bg-gradient-to-b from-[#151C2B] to-noir-card">
+          <div class="flex flex-col sm:flex-row gap-4 items-center sm:items-start">
+            <!-- Porträtt-ram -->
+            <div class="relative w-32 h-36 rounded-xl bg-[#0B0F17] border border-noir-border overflow-hidden flex-shrink-0 shadow-inner group">
+              <img
+                id="detail-portrait-img"
+                src=""
+                alt="Karaktärsporträtt"
+                class="hidden w-full h-full object-cover"
+              />
+              <!-- Cyberpunk Placeholder -->
+              <div id="detail-portrait-placeholder" class="w-full h-full flex flex-col items-center justify-center p-2 text-center relative scanlines">
+                <div class="w-12 h-12 rounded-full bg-noir-amberDark border border-noir-amberBorder flex items-center justify-center font-mono text-lg font-extrabold text-noir-amber mb-1.5">
+                  <span id="detail-initials">CM</span>
+                </div>
+                <span class="font-mono text-[9.5px] tracking-widest text-noir-muted uppercase">INGET PORTRÄTT</span>
+              </div>
+              <!-- Dekorativa hörnmarkeringar -->
+              <span class="absolute top-1.5 left-1.5 w-2 h-2 border-t border-l border-noir-cyan/70 pointer-events-none"></span>
+              <span class="absolute bottom-1.5 right-1.5 w-2 h-2 border-b border-r border-noir-amber/70 pointer-events-none"></span>
+            </div>
+
+            <!-- Namn, kodnamn & uppladdningskontroller -->
+            <div class="flex-1 text-center sm:text-left min-w-0 w-full">
+              <div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-noir-cyanDark border border-noir-cyan/30 font-mono text-[10px] font-bold tracking-[0.08em] text-noir-cyan uppercase mb-1.5">
+                <span id="detail-category-badge">DOSSIER // LAPD</span>
+              </div>
+              <h2 id="detail-name" class="font-display text-lg sm:text-xl font-extrabold text-white tracking-wider uppercase leading-tight">
+                CAL MOREAUX
+              </h2>
+              <p id="detail-subtitle" class="text-xs text-noir-muted mt-0.5 mb-3">
+                Kriminalinspektör, LAPD (2009)
+              </p>
+
+              <!-- Lokal bilduppladdning (FileReader -> localStorage) -->
+              <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2">
+                <label
+                  for="portrait-upload-input"
+                  class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-noir-amber text-[#0A0D14] hover:bg-noir-amberBright font-mono text-[11px] font-bold tracking-[0.05em] uppercase cursor-pointer transition-colors"
+                >
+                  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                  </svg>
+                  <span>LADDA UPP BILD</span>
+                </label>
+                <input
+                  id="portrait-upload-input"
+                  type="file"
+                  accept="image/*"
+                  onchange="handlePortraitUpload(event)"
+                  class="hidden"
+                />
+
+                <button
+                  id="reset-portrait-btn"
+                  onclick="resetCharacterPortrait()"
+                  class="hidden inline-flex items-center gap-1 px-2.5 py-2 rounded-lg bg-[#1A2130] hover:bg-red-950/60 border border-noir-border hover:border-red-500/40 font-mono text-[11px] text-slate-300 hover:text-red-300 uppercase transition-colors cursor-pointer"
+                >
+                  <span>ÅTERSTÄLL</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rik faktaruta (Född, Födelseplats, Status, Yrke, Släkt m.m.) -->
+        <div class="p-4 border-b border-noir-border bg-[#0E131D]">
+          <h3 class="font-mono text-[11px] font-bold tracking-[0.1em] text-noir-amber uppercase mb-2.5 flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-noir-amber"></span>
+            <span>ARKIVDATA // UTÖKAD FAKTARUTA (T.O.M. 2009)</span>
+          </h3>
+          <div class="grid grid-cols-1 gap-2 text-xs">
+            <div class="flex justify-between items-start gap-3 py-1.5 border-b border-noir-border/60">
+              <span class="font-mono text-[11px] text-noir-muted uppercase">FÖDD</span>
+              <span id="detail-born" class="font-mono text-[11.5px] text-slate-200 text-right">Ca 2074 (35 år)</span>
+            </div>
+            <div class="flex justify-between items-start gap-3 py-1.5 border-b border-noir-border/60">
+              <span class="font-mono text-[11px] text-noir-muted uppercase">FÖDELSEPLATS</span>
+              <span id="detail-birthplace" class="font-mono text-[11.5px] text-slate-200 text-right">Los Angeles, Jorden</span>
+            </div>
+            <div class="flex justify-between items-start gap-3 py-1.5 border-b border-noir-border/60">
+              <span class="font-mono text-[11px] text-noir-muted uppercase">YRKE / ROLL</span>
+              <span id="detail-occupation" class="font-mono text-[11.5px] text-slate-200 text-right">Kriminalinspektör</span>
+            </div>
+            <div class="flex justify-between items-start gap-3 py-1.5 border-b border-noir-border/60">
+              <span class="font-mono text-[11px] text-noir-muted uppercase">STATUS (EFTER #5)</span>
+              <span id="detail-status" class="font-mono text-[11.5px] font-semibold text-white text-right">I tjänst / På flykt</span>
+            </div>
+            <div class="flex justify-between items-start gap-3 py-1.5 border-b border-noir-border/60">
+              <span class="font-mono text-[11px] text-noir-muted uppercase">SLÄKT / KOPPLING</span>
+              <span id="detail-family" class="font-mono text-[11.5px] text-slate-200 text-right">Moreaux-familjen</span>
+            </div>
+            <div class="flex justify-between items-start gap-3 py-1.5 border-b border-noir-border/60">
+              <span class="font-mono text-[11px] text-noir-muted uppercase">TILLHÖRIGHET</span>
+              <span id="detail-affiliation" class="font-mono text-[11.5px] text-slate-200 text-right">LAPD</span>
+            </div>
+            <div class="flex justify-between items-start gap-3 pt-1">
+              <span class="font-mono text-[11px] text-noir-muted uppercase">FÖRSTA FRAMTRÄDANDE</span>
+              <span id="detail-first-appearance" class="font-mono text-[11.5px] text-noir-cyan text-right">Origins #1 (2021)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Citat-box (om tillgängligt) -->
+        <div id="detail-quote-box" class="px-4 pt-4">
+          <blockquote class="rounded-xl bg-noir-bg border-l-[3px] border-l-noir-amber px-3.5 py-2.5 italic text-[13px] text-slate-300">
+            "<span id="detail-quote"></span>"
+          </blockquote>
+        </div>
+
+        <!-- Biografi -->
+        <div class="p-4 space-y-3">
+          <h3 class="font-mono text-[11px] font-bold tracking-[0.1em] text-noir-cyan uppercase flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-noir-cyan"></span>
+            <span>KANONISK BIOGRAFI &amp; BAKGRUND</span>
+          </h3>
+          <div id="detail-bio" class="space-y-3 text-[13.5px] text-slate-300 leading-relaxed"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SIDFOT (BACKUP / EXPORT & IMPORT) ==================== -->
+    <footer class="mt-auto px-4 py-5 border-t border-noir-border bg-[#080B11] text-center space-y-3">
+      <div class="font-mono text-[10.5px] tracking-[0.08em] text-noir-muted uppercase">
+        TYRELL CORP // LAPD ARCHIVE SYSTEM v1.8
+      </div>
+
+      <!-- Export & Import av JSON-backup för uppladdade porträtt -->
+      <div class="flex items-center justify-center gap-2.5">
+        <button
+          onclick="exportBackup()"
+          class="px-3 py-2 rounded-lg bg-noir-card hover:bg-noir-cardHover border border-noir-border font-mono text-[11px] text-slate-300 hover:text-noir-amberBright uppercase tracking-wider transition-colors cursor-pointer"
+        >
+          ↓ EXPORTERA BACKUP (JSON)
+        </button>
+
+        <label
+          for="import-backup-input"
+          class="px-3 py-2 rounded-lg bg-noir-card hover:bg-noir-cardHover border border-noir-border font-mono text-[11px] text-slate-300 hover:text-noir-cyan uppercase tracking-wider transition-colors cursor-pointer"
+        >
+          ↑ IMPORTERA
+        </label>
+        <input
+          id="import-backup-input"
+          type="file"
+          accept="application/json,.json"
+          onchange="importBackup(event)"
+          class="hidden"
+        />
+      </div>
+
+      <p class="text-[11px] text-slate-500 max-w-xs mx-auto leading-normal">
+        Alla uppladdade porträtt sparas lokalt i din webbläsare (localStorage). Använd backup för att säkerhetskopiera på iOS.
+      </p>
+    </footer>
+
+    <!-- Toast / Notifikationsbanner (ersätter alert()) -->
+    <div
+      id="toast-banner"
+      class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 hidden max-w-[90vw] px-4 py-2.5 rounded-xl bg-[#131A29] border border-noir-cyan/60 shadow-2xl font-mono text-xs text-white flex items-center gap-2.5"
+    >
+      <span class="w-2 h-2 rounded-full bg-noir-cyan flex-shrink-0"></span>
+      <span id="toast-message">Sparat i arkivet.</span>
+    </div>
+  </div>
+
+  <!-- ==================== APPLIKATIONSLOGIK & DATABAS ==================== -->
+  <script>
+    // Nyckel för localStorage där användarens uppladdade porträtt lagras
+    const STORAGE_KEY = 'br_canon_wiki_portraits_v1_7';
+
+    // Hämta sparade porträtt
+    function loadPortraits() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        return raw ? JSON.parse(raw) : {};
+      } catch (e) {
+        console.error('Kunde inte läsa localStorage:', e);
+        return {};
+      }
+    }
+
+    function savePortraits(portraitsObj) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(portraitsObj));
+        return true;
+      } catch (e) {
+        console.error('Lagringsutrymmet är fullt:', e);
+        showToast('Fel: Bilden är för stor för webbläsarens lagring.');
+        return false;
+      }
+    }
+
+    let toastTimer = null;
+    function showToast(message) {
+      const banner = document.getElementById('toast-banner');
+      const textEl = document.getElementById('toast-message');
+      textEl.textContent = message;
+      banner.classList.remove('hidden');
+      if (toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        banner.classList.add('hidden');
+      }, 3200);
+    }
+
+    // ==================== KANONISK DATA (MED UTÖKADE FAKTAFÄLT) ====================
+    const ARCHIVE_DATA = {
+      characters: [
+        {
+          id: 'cal-moreaux',
+          name: 'Cal Moreaux',
+          initials: 'CM',
+          faction: 'lapd',
+          subtitle: 'Kriminalinspektör, LAPD (2009)',
+          badge: 'LAPD // UTREDARE',
+          born: 'Ca 2074 (35 år)',
+          birthplace: 'Los Angeles, Jorden',
+          occupation: 'Kriminalinspektör (LAPD)',
+          status: 'I korseld mellan LAPD och Tyrell Corp (efter #5)',
+          family: 'Moreaux-familjen',
+          affiliation: 'Los Angeles Police Department (LAPD)',
+          firstAppearance: 'Blade Runner Origins #1',
+          quote: 'När Tyrell Corporation säger åt polisen att sluta gräva, är det precis då man borde hämta en större spade.',
+          summary: 'En härdad men principfast LAPD-detektiv i ett regntungt Los Angeles 2009 som nu insett att Tyrell Corp jagar de förrymda försökspersonerna med dödligt våld.',
+          bio: [
+            'Cal Moreaux arbetar som kriminalinspektör vid LAPD år 2009 — en tid innan den särskilda Blade Runner-enheten ens existerar. När den briljante Tyrell-forskaren Dr. Lydia Kine hittas död i sitt laboratorium kallas Cal in för att avskriva fallet som självmord.',
+            'Genom ledtrådar på brottsplatsen och i Los Angeles mörka bakgator upptäcker Cal att Lydia Kine i hemlighet bedrev oetiska biologiska experiment utanför Tyrell Corporations officiella register. Ju närmare sanningen Cal kommer, desto hårdare försöker Tyrells säkerhetschef Ilora Stahl tysta ned utredningen.',
+            'I Origins #3 och #4 leder spåren Cal till underjordiska kliniker, försökspersoner med onaturliga krafter som Nia, samt jakten på Lydias bror Markus Kine — vilket sätter Cal i direkt skottlinje mellan LAPD:s korruption och Tyrells privata styrkor.',
+            'I Origins #5 nystar Cal vidare i kopplingen mellan Lydias död och de saknade människorna i Los Angeles undre värld. Han inser att de jagade "avvikarna" som rymt från Lydias labb — däribland Effie, Ilora och Kallie — i själva verket är mänskliga offer för olagliga experiment. När Tyrells beväpnade säkerhetsstyrkor hinner ikapp gruppen dras Cal in i en våldsam eldstrid och tvingas välja sida för att rädda rymlingarna från att likvideras.'
+          ]
+        },
+        {
+          id: 'lydia-kine',
+          name: 'Dr. Lydia Kine',
+          initials: 'LK',
+          faction: 'tyrell',
+          subtitle: 'Chefsforskare, Tyrell Corporation',
+          badge: 'TYRELL // FORSKNING',
+          born: 'Ca 2068 (41 år vid tidpunkten för sin död)',
+          birthplace: 'San Francisco, Jorden',
+          occupation: 'Chefsforskare & Biotekniker',
+          status: 'Avliden i #1 (experimentens fulla vidd avslöjad i #5)',
+          family: 'Markus Kine (bror)',
+          affiliation: 'Tyrell Corporation (tidigare)',
+          firstAppearance: 'Blade Runner Origins #1',
+          quote: 'Vi skapar inte bara verktyg åt Eldon Tyrell. Vi leker med vad som gör en människa levande.',
+          summary: 'Briljant bioteknikforskare på Tyrell Corporation vars mystiska död i #1 sätter igång hela kedjan av avslöjanden kring tidiga replikant-experiment.',
+          bio: [
+            'Dr. Lydia Kine var en av Eldon Tyrells mest begåvade forskare under 2000-talets första decennium, djupt involverad i utvecklingen av tidig syntetisk vävnad och artificiella organismer.',
+            'I inledningen av Origins #1 hittas hon död på ett sätt som arrangerats för att likna ett självmord. Men Cal Moreauxs utredning avslöjar snabbt att Lydia hade ett dolt laboratorium i Los Angeles och att hon förde krypterade anteckningar.',
+            'Genom #3 och #4 framkommer den mörka sanningen: Lydia använde utsatta människor från gatan som försökspersoner för att övervinna tekniska hinder i sin forskning — experiment som resulterade i individer som Nia och som hennes bror Markus nu försöker skydda eller dölja.',
+            'I Origins #5 klarnar hela omfattningen av Lydias hemliga projekt: innan hon kunde skapa de första rena Nexus-prototyperna försökte hon framställa syntetiskt liv genom att genetiskt och kirurgiskt modifiera levande mänskliga subjekt med nackimplantat — experiment som orsakade svåra minnesfragmenteringar och fysiska biverkningar hos de överlevande.'
+          ]
+        },
+        {
+          id: 'asa',
+          name: 'Asa',
+          initials: 'AS',
+          faction: 'others',
+          subtitle: 'Mekaniker / Tidig syntetisk konstruktion',
+          badge: 'NEXUS-PROTOTYP // OKÄND',
+          born: 'Okänt (Konstruerad / Tillverkad ~2007)',
+          birthplace: 'Los Angeles (Hemligt Tyrell-labb)',
+          occupation: 'Oberoende mekaniker / Flykting',
+          status: 'På fri fot i Los Angeles',
+          family: 'Inga kända biologiska band (Skapad av Lydia Kine)',
+          affiliation: 'Kopplad till Dr. Lydia Kine',
+          firstAppearance: 'Blade Runner Origins #2',
+          quote: 'Jag är inte det du tror att jag är, detektiv. Och jag är inte den enda.',
+          summary: 'En gåtfull gestalt i Los Angeles undre värld med direkt koppling till Lydia Kines förbjudna forskning och de tidigaste stegen mot replikanter.',
+          bio: [
+            'Asa dyker upp i utredningens utkant som en mystisk och vaksam individ som känner till betydligt mer om Dr. Lydia Kines dubbelspel än vad Tyrell Corporation anar.',
+            'I Origins #3 avslöjas Asas sanna natur och djupa koppling till Lydias experiment — ett avgörande bevis på att gränsen mellan människa och syntetisk skapelse redan börjat suddas ut år 2009.',
+            'Asa rör sig försiktigt genom Sector 4 och samarbetar motvilligt med Cal Moreaux för att hindra Tyrells agenter från att lägga beslag på Lydias sista kvarvarande forskning.'
+          ]
+        },
+        {
+          id: 'markus-kine',
+          name: 'Markus Kine',
+          initials: 'MK',
+          faction: 'others',
+          subtitle: 'Lydia Kines bror / Informationsbärare',
+          badge: 'EFTERLYST // NYCKELVITTNE',
+          born: 'Ca 2072 (37 år)',
+          birthplace: 'San Francisco, Jorden',
+          occupation: 'F.d. systemtekniker',
+          status: 'Jagad av både LAPD och Tyrell Corp',
+          family: 'Dr. Lydia Kine (syster, avliden)',
+          affiliation: 'Ingen (F.d. koppling till Lydia Kine)',
+          firstAppearance: 'Blade Runner Origins #2',
+          quote: 'Lydia visste att de skulle komma efter henne. Han gav mig det enda de inte kan återskapa.',
+          summary: 'Dr. Lydia Kines bror som håller sig gömd i Los Angeles med livsviktig information om systerns forskning och försökspersoner.',
+          bio: [
+            'Markus Kine är bror till den avlidna forskaren Dr. Lydia Kine. Efter hennes död blir han omedelbart det främsta målet för både LAPD och Tyrell Corporations privata säkerhetsstyrkor.',
+            'I Origins #3 och #4 står det klart att Lydia anförtrodde Markus centrala delar av sin forskning innan hon dog, i hopp om att hålla det borta från Eldon Tyrell och Ilora Stahl.',
+            'Markus tvingas navigera genom Los Angeles farligaste bakgator och underjordiska kliniker, samtidigt som hans fysiska och mentala tillstånd visar att han är djupare indragen i systerns experiment än han först velat erkänna.'
+          ]
+        },
+        {
+          id: 'nia',
+          name: 'Nia',
+          initials: 'NI',
+          faction: 'others',
+          subtitle: 'Försöksperson / Tidig prototyp',
+          badge: 'FÖRSÖKSPERSON // #04',
+          born: 'Ca 2088 (21 år)',
+          birthplace: 'Los Angeles, Sector 4',
+          occupation: 'F.d. gatuförsäljare / Testobjekt',
+          status: 'Överlevande i Los Angeles bakgator',
+          family: 'Okänd familjebakgrund',
+          affiliation: 'Offer för Lydia Kines experiment',
+          firstAppearance: 'Blade Runner Origins #3',
+          quote: 'Hon lovade att göra oss starkare. Hon sa aldrig vad det skulle kosta.',
+          summary: 'En ung kvinna från Los Angeles gator som utsattes för Lydia Kines hemliga experiment och nu kämpar för sin överlevnad.',
+          bio: [
+            'Nia introducerades i samband med avslöjandena kring Dr. Lydia Kines hemliga laboratorium. Hon rekryterades under falska förespeglingar från Los Angeles fattigare kvarter för att delta i medicinska tester.',
+            'Experimenten förändrade hennes biologi och gav henne övermänsklig styrka och uthållighet — tidiga, råa föregångare till de egenskaper som senare skulle definiera Nexus-seriens replikanter.',
+            'I Origins #4 hamnar Nia i centrum för striden när både Cal Moreaux och Ilora Stahls styrkor spårar upp henne.'
+          ]
+        },
+        {
+          id: 'ilora',
+          name: 'Ilora',
+          initials: 'IL',
+          faction: 'others',
+          subtitle: 'Förrymd försöksperson / Tidig prototyp-replikant',
+          badge: 'FÖRSÖKSPERSON // RYMLING',
+          born: 'Ca 2086 (23 år)',
+          birthplace: 'Los Angeles, Jorden',
+          occupation: 'Rymling från Lydias hemliga labb',
+          status: 'På flykt undan Tyrell Corp (efter #5)',
+          family: 'Förlorade / fragmenterade familjeminnen',
+          affiliation: 'Rymlingarna (tillsammans med Effie & Kallie)',
+          firstAppearance: 'Blade Runner Origins #5',
+          quote: 'De satte metall i nacken på oss och kallade det framtiden. Men jag minns vem jag var.',
+          summary: 'En av de överlevande försökspersonerna från Lydia Kines hemliga labb med implantat i nacken och övermänsklig styrka, på flykt tillsammans med Effie och Kallie.',
+          bio: [
+            'Ilora är en av de utsatta människor som utsattes för Dr. Lydia Kines hemliga och olagliga modifieringsexperiment innan hon lyckades fly ut i Los Angeles slummen tillsammans med Effie och Kallie.',
+            'Likt de andra överlevande bär hon synliga ärr och kirurgiska implantat i nacken samt besitter en onaturlig fysisk styrka och uthållighet. I Origins #5 kämpar Ilora för att förstå sin egen identitet och vad som återstår av hennes mänsklighet efter Lydias ingrepp, samtidigt som hon tvingas försvara gruppen när Tyrell Corporations beväpnade styrkor lokaliserar deras gömställe.'
+          ]
+        },
+        {
+          id: 'kallie',
+          name: 'Kallie',
+          initials: 'KA',
+          faction: 'others',
+          subtitle: 'Ung rymling / Försöksperson',
+          badge: 'FÖRSÖKSPERSON // RYMLING',
+          born: 'Ca 2090 (19 år)',
+          birthplace: 'Los Angeles, Jorden',
+          occupation: 'Rymling från Lydias hemliga labb',
+          status: 'På flykt undan Tyrell Corp (efter #5)',
+          family: 'Saknad / okänd familj',
+          affiliation: 'Rymlingarna (tillsammans med Effie & Ilora)',
+          firstAppearance: 'Blade Runner Origins #5',
+          quote: 'Så länge vi håller ihop kan de inte ta oss tillbaka till det där mörkret.',
+          summary: 'En ung och sårbar rymling från Lydia Kines experiment som trots rädslan visar stark lojalitet mot Effie, Ilora och resten av gruppen.',
+          bio: [
+            'Kallie tillhör den lilla gruppen unga försökspersoner som lyckades fly från Dr. Lydia Kines underjordiska anläggning och nu gömmer sig i Los Angeles övergivna industriområden.',
+            'I Origins #5 präglas Kallie av traumat efter testerna i laboratoriet. Även om hon är fysiskt och emotionellt sårbar vägrar hon att överge Effie när de fysiska biverkningarna slår till, och hon står lojalt vid Ilora och gruppens sida under Tyrell Corps nattliga räd.'
+          ]
+        },
+        {
+          id: 'effie',
+          name: 'Effie',
+          initials: 'EF',
+          faction: 'lapd',
+          subtitle: 'Kriminaltekniker / Ledare för rymlingarna',
+          badge: 'LAPD // FORENSICS & RYMLING',
+          born: 'Ca 2078 (31 år)',
+          birthplace: 'Los Angeles, Jorden',
+          occupation: 'Kriminaltekniker (LAPD) / Beskyddare av rymlingarna',
+          status: 'På flykt med försökspersonerna (efter #5)',
+          family: 'Inga kända uppgifter',
+          affiliation: 'LAPD / Rymlingarna (Ilora, Kallie m.fl.)',
+          firstAppearance: 'Blade Runner Origins #1',
+          quote: 'Siffrorna i den här obduktionsrapporten stämmer inte, Cal. Någon har tvättat filerna.',
+          summary: 'Cals lojala kollega inom LAPD som i #5 leder och skyddar de förrymda försökspersonerna på flykt undan Tyrell Corps säkerhetsstyrkor.',
+          bio: [
+            'Effie arbetar nära Cal Moreaux inom LAPD och fungerar som hans viktigaste bollplank och tekniska resurs när utredningen kring Lydia Kine möter politiskt motstånd uppifrån.',
+            'När högre chefer inom poliskåren försöker stänga fallet på order av Tyrell Corporation, hjälper Effie Cal i hemlighet att spåra kemiska substanser, krypterade data och kopplingar till black market-kliniker i staden.',
+            'I Origins #5 tar Effie en avgörande roll som ledare och beskyddare för de förrymda försökspersonerna — däribland Ilora och Kallie — när de gömmer sig undan Tyrell Corporations jaktenheter. Samtidigt tvingas hon kämpa mot svåra minnesfragmenteringar och de smärtsamma fysiska biverkningarna av Lydias experiment, vilket gör varje timme på flykt till en kamp mot klockan.'
+          ]
+        },
+        {
+          id: 'ilora-stahl',
+          name: 'Ilora Stahl',
+          initials: 'IS',
+          faction: 'tyrell',
+          subtitle: 'Säkerhetschef, Tyrell Corporation',
+          badge: 'TYRELL // SÄKERHET',
+          born: 'Ca 2065 (44 år)',
+          birthplace: 'New York, Jorden',
+          occupation: 'Säkerhetschef & Operativ chef',
+          status: 'Leder väpnad jakt på rymlingarna (efter #5)',
+          family: 'Stahl-familjen',
+          affiliation: 'Tyrell Corporation',
+          firstAppearance: 'Blade Runner Origins #1',
+          quote: 'Tyrell Corporation bygger framtiden, detektiv. Vi har inte råd med spöken från det förflutna.',
+          summary: 'Kallblodig säkerhetsansvarig på Tyrell Corporation som i #5 skickar ut dödliga jaktenheter för att eliminera alla spår av Lydias mänskliga experiment.',
+          bio: [
+            'Ilora Stahl är en högt uppsatt säkerhetsoperatör inom Tyrell Corporation som svarar direkt inför Eldon Tyrell. Hennes uppdrag är att skydda företagets rykte och immateriella tillgångar till varje pris.',
+            'Omedelbart efter Lydia Kines död kliver Stahl in på brottsplatsen för att ta kontroll över utredningen. När hon inser att Cal Moreaux vägrar låta sig köpas eller skrämmas, sätter hon in egna agenter för att spåra upp Markus Kine, Asa och Nia före polisen.',
+            'I Origins #5 trappar Stahl upp operationen till fullskalig jakt i Los Angeles slumkvarter. Under Tyrell Corps hårda ledning skickas tungt beväpnade operatörer ut med strikta order att lokalisera och likvidera de förrymda försökspersonerna innan polisen eller allmänheten kan bevisa att företaget utfört olagliga experiment på levande människor.'
+          ]
+        },
+        {
+          id: 'eldon-tyrell',
+          name: 'Eldon Tyrell',
+          initials: 'ET',
+          faction: 'tyrell',
+          subtitle: 'Grundare & VD, Tyrell Corporation',
+          badge: 'TYRELL // GRUNDARE',
+          born: 'Ca 2030 (79 år)',
+          birthplace: 'Los Angeles, Jorden',
+          occupation: 'Företagsledare, Vetenskapsman & Visionär',
+          status: 'VD för Tyrell Corporation (2009)',
+          family: 'Tyrell-dynastin',
+          affiliation: 'Tyrell Corporation',
+          firstAppearance: 'Blade Runner (1982) / Origins #1',
+          quote: 'Framsteg kräver uppoffringar, Ilora. Se bara till att de inte kan spåras tillbaka till min dörr.',
+          summary: 'Grundaren av Tyrell Corporation vars tidiga imperium i 2009 års Los Angeles lägger grunden för replikantteknologin.',
+          bio: [
+            'År 2009 har Eldon Tyrell ännu inte byggt de gigantiska pyramider som senare ska dominera Los Angeles silhuett, men hans företag är redan ledande inom bioteknik och artificiell intelligens.',
+            'I Origins #1–#4 agerar Tyrell främst från skuggorna genom sin säkerhetschef Ilora Stahl. Han är fast besluten att dölja Lydia Kines misslyckade eller oauktoriserade experiment för allmänheten, samtidigt som han vill åt de vetenskapliga genombrott hon lyckades uppnå.',
+            'Genom avslöjandena i Origins #5 blir det tydligt hur långt Tyrells organisation är beredd att gå för att sopa igen spåren efter övergångsfasen mellan mänsklig modifiering och de kommande rena Nexus-prototyperna.'
+          ]
+        }
+      ],
+
+      locations: [
+        {
+          id: 'tyrell-corp-2009',
+          name: 'Tyrell Corporation (2009)',
+          type: 'FÖRETAG // HÖGKVARTER',
+          sector: 'Centrala Los Angeles',
+          firstAppearance: 'Origins #1',
+          description: 'Föregångaren till det megaföretag som senare ska dominera världen. År 2009 består komplexet av högteknologiska men slutna forskningslaboratorier där Eldon Tyrell och hans team utvecklar tidig syntetisk vävnad och cybernetik under strikt sekretess, samtidigt som privata jaktenheter dirigeras härifrån för att tysta läckor.'
+        },
+        {
+          id: 'lapd-2009',
+          name: 'LAPD (Los Angeles Police Department)',
+          type: 'MYNDIGHET // POLISKÅR',
+          sector: 'Downtown LA',
+          firstAppearance: 'Origins #1',
+          description: 'Poliskåren i ett allt mer överbefolkat, förorenat och regndränkt Los Angeles år 2009. Den särskilda Blade Runner-enheten existerar ännu inte; istället hanteras företagsrelaterade brott av vanliga mordutredare som Cal Moreaux under hård press från storföretagen.'
+        },
+        {
+          id: 'kines-secret-lab',
+          name: 'Dr. Lydia Kines Hemliga Labb',
+          type: 'PLATS // DOLT LABORATORIUM',
+          sector: 'Industriområdet / Sector 4',
+          firstAppearance: 'Origins #2',
+          description: 'Ett undangömt, oregistrerat laboratorium utanför Tyrell Corporations officiella lokaler. Här utförde Dr. Lydia Kine sina mest kontroversiella experiment på mänskliga försökspersoner — där hon opererade in nackimplantat och modifierade levande subjekt som ett mellansteg mot syntetiska Nexus-prototyper.'
+        },
+        {
+          id: 'la-back-alleys',
+          name: 'Los Angeles Bakgator / Sector 4',
+          type: 'OMRÅDE // STADSDEL',
+          sector: 'Sector 4, Los Angeles',
+          firstAppearance: 'Origins #1',
+          description: 'Neondränkta, ständigt regntunga gränder fyllda med gatukök, trånga bostadskvarter och skumraskaffärer. Här gömmer sig Markus Kine, Asa och Nia undan Tyrells övervakning och säkerhetsstyrkor.'
+        },
+        {
+          id: 'abandoned-industrial-hideout',
+          name: 'Rymlingarnas Gömställe (Övergivna Industriområdet)',
+          type: 'PLATS // TILLFÄLLIGT SKYDD',
+          sector: 'Yttre Slummen / Industri-zonen',
+          firstAppearance: 'Origins #5',
+          description: 'En förfallen, regnpiskad industribyggnad i Los Angeles slumkvarter där Effie, Ilora, Kallie och de andra förrymda försökspersonerna söker skydd undan Tyrell Corps jaktenheter — och där den våldsamma eldstriden i Origins #5 bryter ut.'
+        },
+        {
+          id: 'black-market-clinics',
+          name: 'Black Market Clinics',
+          type: 'PLATS // UNDERJORDISK KLINIK',
+          sector: 'Los Angeles Undre Värld',
+          firstAppearance: 'Origins #3',
+          description: 'Illegala medicinska och cybernetiska kliniker som drivs i stadens skuggor. I Origins #3 och #4 leder spåren hit när Cal Moreaux kartlägger hur försökspersoner behandlats och var Lydia Kines utrustning hamnat.'
+        }
+      ],
+
+      events: [
+        {
+          id: 'event-1',
+          issue: '#1',
+          year: '2009',
+          title: 'Dr. Lydia Kines mystiska död',
+          description: 'Tyrell-forskaren Dr. Lydia Kine hittas död i sitt laboratorium. LAPD-detektiven Cal Moreaux kallas till platsen och upptäcker snabbt att det iscensatta självmordet döljer en omfattande mörkläggning från Tyrell Corporation.'
+        },
+        {
+          id: 'event-2',
+          issue: '#1',
+          year: '2009',
+          title: 'Ilora Stahl tar över brottsplatsen',
+          description: 'Tyrells säkerhetschef Ilora Stahl dyker upp och försöker stänga ute polisen. Cal säkrar i hemlighet krypterade ledtrådar innan företaget hinner rensa laboratoriet.'
+        },
+        {
+          id: 'event-3',
+          issue: '#2',
+          year: '2009',
+          title: 'Spåren leder till Markus Kine och Asa',
+          description: 'Utredningen tar Cal ut i Los Angeles bakgator där han stöter på den gåtfulle Asa och inser att Lydias bror, Markus Kine, är på flykt med avgörande delar av systerns hemliga forskning.'
+        },
+        {
+          id: 'event-4',
+          issue: '#3',
+          year: '2009',
+          title: 'Avslöjandet om de mänskliga försökspersonerna',
+          description: 'I Lydia Kines hemliga labb och stadens black market-kliniker upptäcker Cal den mörka sanningen: Lydia använde utsatta människor som försökspersoner, och Asa visar sig vara en tidig syntetisk konstruktion.'
+        },
+        {
+          id: 'event-5',
+          issue: '#4',
+          year: '2009',
+          title: 'Mötet med Nia i Sector 4',
+          description: 'Cal spårar upp Nia, en av Lydias försökspersoner som utvecklat övermänsklig styrka. Samtidigt trappar Ilora Stahl upp jakten med beväpnade styrkor för att eliminera alla vittnen.'
+        },
+        {
+          id: 'event-6',
+          issue: '#4',
+          year: '2009',
+          title: 'Konfrontation och skärpt konflikt',
+          description: 'Gränsen mellan polisutredning och överlevnad suddas ut när Cal tvingas skydda de inblandade mot Tyrell Corporations privata agenter — med Markus Kine fortfarande som nyckeln till hela gåtan.'
+        },
+        {
+          id: 'event-7',
+          issue: '#5',
+          year: '2009',
+          title: 'Jakten på rymlingarna intensifieras',
+          description: 'Tyrell Corporations säkerhetsstyrkor skickas ut i Los Angeles mörka bakgator och slumområden med order att spåra upp och tysta Effie, Ilora, Kallie och de övriga försökspersonerna som flytt från Lydias hemliga labb.'
+        },
+        {
+          id: 'event-8',
+          issue: '#5',
+          year: '2009',
+          title: 'Sanningen om offren bakom experimenten',
+          description: 'Cal Moreaux nystar vidare i spåren efter de försvunna människorna och inser att de jagade "avvikarna" i själva verket är levande mänskliga offer som modifierats med nackimplantat i Lydias försök att skapa syntetiskt liv.'
+        },
+        {
+          id: 'event-9',
+          issue: '#5',
+          year: '2009',
+          title: 'Kampen mot biverkningar och identitetskris',
+          description: 'I sitt gömställe i de övergivna industriområdena kämpar rymlingarna — ledda och skyddade av Effie — med fragmenterade minnen, fysiska biverkningar och sina nya övermänskliga förmågor medan de jagas som djur.'
+        },
+        {
+          id: 'event-10',
+          issue: '#5',
+          year: '2009',
+          title: 'Eldstrid i industriområdet',
+          description: 'En våldsam sammandrabbning bryter ut när Tyrells tungt beväpnade agenter lokaliserar rymlingarnas gömställe. Cal Moreaux ingriper i korselden och tvingas välja sida för att rädda gruppen från att likvideras.'
+        }
+      ],
+
+      timeline: [
+        {
+          id: 'era-1',
+          period: '1990-TALET – TIDIGT 2000-TAL',
+          eraTag: 'EKOLOGISK KOLLAPS',
+          title: 'Massutrotning & syntetiska djur',
+          description: 'Globala klimatförändringar, radioaktivt nedfall och skenande föroreningar orsakar en massiv ekologisk kollaps. Nästan alla vilda djurarter utrotas, vilket driver fram den första vågen av syntetiska replikdjur och artificiell bioteknik.'
+        },
+        {
+          id: 'era-2',
+          period: '~2001 – 2005',
+          eraTag: 'TYRELL CORPORATION',
+          title: 'Eldon Tyrell grundar sitt bioteknikimperium',
+          description: 'Den geniale forskaren Dr. Eldon Tyrell grundar Tyrell Corporation i Los Angeles. Företaget tar snabbt ledningen inom genetisk design, syntetiska organ och tidig artificiell intelligens.'
+        },
+        {
+          id: 'era-3',
+          period: '~2006 – 2008',
+          eraTag: 'NEXUS 1–3 PROTOTYPER',
+          title: 'De första arbetsmodellerna för Off-World',
+          description: 'I takt med att jorden blir allt mer obeboelig expanderar mänskligheten till rymdkolonierna (Off-world). Tyrell utvecklar de tidiga modellerna Nexus-1 till Nexus-3 — primitiva, biologiskt instabila arbetsenheter byggda för extremt farliga uppdrag.'
+        },
+        {
+          id: 'era-4',
+          period: 'OKTOBER 2009',
+          eraTag: 'N4-GENOMBROTTET',
+          title: 'Födelsen av den moderna replikanten',
+          description: 'Dr. Lydia Kine lyckas i hemlighet utveckla det första stabila syntetiska nervsystemet genom oetiska experiment på mänskliga försökspersoner i Los Angeles. För första gången suddas den biologiska gränsen mellan människa och syntetisk skapelse ut (grunden till Nexus-4).'
+        },
+        {
+          id: 'era-5',
+          period: 'NOVEMBER 2009',
+          eraTag: 'ORIGINS-KONFLIKTEN',
+          title: 'Lydia Kines död & den väpnade jakten på prototyperna',
+          description: 'Dr. Lydia Kine mördas och Tyrell Corp försöker dölja spåren efter hennes förbjudna forskning. LAPD-detektiven Cal Moreaux avslöjar att företaget utfört olagliga mänskliga experiment, och en väpnad jakt bryter ut i Los Angeles när Tyrells styrkor försöker likvidera de första förrymda prototyperna och försökspersonerna — händelserna som direkt lägger grunden för den framtida Blade Runner-enheten.'
+        }
+      ]
+    };
+
+    let state = {
+      activeTab: 'characters',
+      characterFaction: 'all',
+      searchQuery: '',
+      selectedCharacterId: null
+    };
+
+    window.addEventListener('DOMContentLoaded', () => {
+      updateBadges();
+      renderList();
+    });
+
+    function updateBadges() {
+      document.getElementById('badge-characters').textContent = ARCHIVE_DATA.characters.length;
+      document.getElementById('badge-locations').textContent = ARCHIVE_DATA.locations.length;
+      document.getElementById('badge-events').textContent = ARCHIVE_DATA.events.length;
+      document.getElementById('badge-timeline').textContent = ARCHIVE_DATA.timeline.length;
+    }
+
+    function switchTab(tabName) {
+      state.activeTab = tabName;
+      if (state.selectedCharacterId) {
+        closeCharacterModal(false);
+      }
+
+      const tabs = ['characters', 'locations', 'events', 'timeline'];
+      tabs.forEach((t) => {
+        const btn = document.getElementById(`tab-${t}`);
+        const badge = document.getElementById(`badge-${t}`);
+        if (t === tabName) {
+          btn.className = 'tab-btn flex-shrink-0 flex items-center gap-2 px-3.5 py-2 rounded-xl font-mono text-[12px] font-bold tracking-[0.06em] uppercase transition-all cursor-pointer bg-noir-amber text-[#0A0D14] shadow-md';
+          badge.className = 'px-1.5 py-0.5 rounded-md text-[11px] font-extrabold bg-black/20 text-[#0A0D14]';
+        } else {
+          btn.className = 'tab-btn flex-shrink-0 flex items-center gap-2 px-3.5 py-2 rounded-xl font-mono text-[12px] font-semibold tracking-[0.06em] uppercase transition-all cursor-pointer bg-noir-card border border-noir-border text-noir-muted hover:text-white';
+          badge.className = 'px-1.5 py-0.5 rounded-md text-[11px] font-bold bg-[#1B2334] text-slate-300';
+        }
+      });
+
+      renderList();
+    }
+
+    function setCharacterFaction(factionKey) {
+      state.characterFaction = factionKey;
+      renderList();
+    }
+
+    function renderCharacterSubfilters() {
+      const container = document.getElementById('character-subfilters');
+      if (state.activeTab !== 'characters') {
+        container.classList.add('hidden');
+        container.innerHTML = '';
+        return;
+      }
+
+      container.classList.remove('hidden');
+
+      const allCount = ARCHIVE_DATA.characters.length;
+      const lapdCount = ARCHIVE_DATA.characters.filter((c) => c.faction === 'lapd').length;
+      const tyrellCount = ARCHIVE_DATA.characters.filter((c) => c.faction === 'tyrell').length;
+      const othersCount = ARCHIVE_DATA.characters.filter((c) => c.faction === 'others').length;
+
+      const filters = [
+        { key: 'all', label: 'ALLA', count: allCount },
+        { key: 'lapd', label: 'LAPD / POLIS', count: lapdCount },
+        { key: 'tyrell', label: 'TYRELL CORP', count: tyrellCount },
+        { key: 'others', label: 'ÖVRIGA / REPLICANTS', count: othersCount }
+      ];
+
+      container.innerHTML = filters
+        .map((f) => {
+          const isActive = state.characterFaction === f.key;
+          const activeClasses = isActive
+            ? 'bg-noir-cyanDark border-noir-cyan/70 text-noir-cyan font-bold shadow-sm'
+            : 'bg-noir-card border-noir-border text-noir-muted hover:text-slate-200 font-medium';
+          const badgeClasses = isActive
+            ? 'bg-noir-cyan/20 text-noir-cyan'
+            : 'bg-[#1A2233] text-slate-400';
+
+          return `
+            <button
+              type="button"
+              onclick="setCharacterFaction('${f.key}')"
+              class="flex-shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border font-mono text-[11px] tracking-[0.05em] uppercase transition-all cursor-pointer ${activeClasses}"
+            >
+              <span>${f.label}</span>
+              <span class="px-1.5 py-0.2 rounded text-[10px] font-bold ${badgeClasses}">${f.count}</span>
+            </button>
+          `;
+        })
+        .join('');
+    }
+
+    function handleSearch(query) {
+      state.searchQuery = query.trim().toLowerCase();
+      const clearBtn = document.getElementById('clear-search-btn');
+      if (state.searchQuery.length > 0) {
+        clearBtn.classList.remove('hidden');
+      } else {
+        clearBtn.classList.add('hidden');
+      }
+
+      if (state.selectedCharacterId) {
+        closeCharacterModal(false);
+      }
+
+      renderList();
+    }
+
+    function clearSearch() {
+      const input = document.getElementById('search-input');
+      input.value = '';
+      handleSearch('');
+      input.focus();
+    }
+
+    function renderList() {
+      const container = document.getElementById('content-container');
+      const q = state.searchQuery;
+
+      renderCharacterSubfilters();
+      container.innerHTML = '';
+
+      if (state.activeTab === 'characters') {
+        const portraits = loadPortraits();
+        const filtered = ARCHIVE_DATA.characters.filter((c) => {
+          const matchesFaction = state.characterFaction === 'all' || c.faction === state.characterFaction;
+          const matchesSearch =
+            c.name.toLowerCase().includes(q) ||
+            c.subtitle.toLowerCase().includes(q) ||
+            c.summary.toLowerCase().includes(q) ||
+            c.affiliation.toLowerCase().includes(q);
+          return matchesFaction && matchesSearch;
+        });
+
+        if (filtered.length === 0) {
+          container.innerHTML = renderEmptyState('Inga karaktärer matchade valt filter eller din sökning i arkivet.');
+          return;
+        }
+
+        filtered.forEach((char) => {
+          const customImg = portraits[char.id];
+          const card = document.createElement('button');
+          card.type = 'button';
+          card.onclick = () => openCharacterModal(char.id);
+          card.className = 'w-full text-left rounded-xl bg-noir-card hover:bg-noir-cardHover border border-noir-border hover:border-noir-amber/50 p-3.5 transition-all flex items-center gap-3.5 group cursor-pointer active:scale-[0.99]';
+
+          const avatarHtml = customImg
+            ? `<img src="${customImg}" alt="${char.name}" class="w-14 h-16 rounded-lg object-cover border border-noir-amber/40 flex-shrink-0" />`
+            : `<div class="w-14 h-16 rounded-lg bg-[#0B0F17] border border-noir-border group-hover:border-noir-amber/40 flex flex-col items-center justify-center flex-shrink-0 scanlines">
+                 <span class="font-mono text-sm font-extrabold text-noir-amber">${char.initials}</span>
+                 <span class="font-mono text-[8px] text-noir-muted mt-0.5">DOSSIER</span>
+               </div>`;
+
+          card.innerHTML = `
+            ${avatarHtml}
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between gap-2 mb-0.5">
+                <span class="font-mono text-[10px] font-bold tracking-[0.07em] text-noir-cyan uppercase truncate">${char.badge}</span>
+                <span class="font-mono text-[11px] text-noir-amber opacity-80 group-hover:translate-x-0.5 transition-transform">WIKI →</span>
+              </div>
+              <h3 class="font-mono text-[15px] font-bold text-white group-hover:text-noir-amberBright transition-colors truncate">
+                ${char.name}
+              </h3>
+              <p class="text-[12.5px] text-slate-400 line-clamp-2 leading-snug mt-1">
+                ${char.summary}
+              </p>
+            </div>
+          `;
+          container.appendChild(card);
+        });
+      } else if (state.activeTab === 'locations') {
+        const filtered = ARCHIVE_DATA.locations.filter((loc) => {
+          return (
+            loc.name.toLowerCase().includes(q) ||
+            loc.type.toLowerCase().includes(q) ||
+            loc.sector.toLowerCase().includes(q) ||
+            loc.description.toLowerCase().includes(q)
+          );
+        });
+
+        if (filtered.length === 0) {
+          container.innerHTML = renderEmptyState('Inga platser eller företag matchade din sökning.');
+          return;
+        }
+
+        filtered.forEach((loc) => {
+          const card = document.createElement('article');
+          card.className = 'rounded-xl bg-noir-card border border-noir-border border-l-[3px] border-l-noir-amber p-4 space-y-2';
+          card.innerHTML = `
+            <div class="flex items-center justify-between gap-2">
+              <span class="font-mono text-[10.5px] font-bold tracking-[0.07em] text-noir-amber uppercase">${loc.type}</span>
+              <span class="px-2 py-0.5 rounded bg-[#192030] font-mono text-[10px] text-noir-cyan">${loc.firstAppearance}</span>
+            </div>
+            <h3 class="font-mono text-[15px] font-bold text-white">${loc.name}</h3>
+            <div class="font-mono text-[11px] text-noir-muted">SEKTOR: ${loc.sector}</div>
+            <p class="text-[13px] text-slate-300 leading-relaxed pt-1">${loc.description}</p>
+          `;
+          container.appendChild(card);
+        });
+      } else if (state.activeTab === 'events') {
+        const filtered = ARCHIVE_DATA.events.filter((ev) => {
+          return (
+            ev.title.toLowerCase().includes(q) ||
+            ev.description.toLowerCase().includes(q) ||
+            ev.issue.toLowerCase().includes(q)
+          );
+        });
+
+        if (filtered.length === 0) {
+          container.innerHTML = renderEmptyState('Inga händelser matchade din sökning.');
+          return;
+        }
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'relative pl-4 border-l-2 border-noir-border space-y-3.5 ml-2';
+
+        filtered.forEach((ev) => {
+          const item = document.createElement('article');
+          item.className = 'relative rounded-xl bg-noir-card border border-noir-border p-3.5';
+          item.innerHTML = `
+            <span class="absolute -left-[23px] top-4 w-3 h-3 rounded-full bg-noir-bg border-2 border-noir-amber"></span>
+            <div class="flex items-center justify-between gap-2 mb-1.5">
+              <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-noir-amberDark border border-noir-amberBorder font-mono text-[11px] font-bold text-noir-amberBright">
+                ORIGINS ${ev.issue}
+              </span>
+              <span class="font-mono text-[11px] text-noir-muted">ÅR ${ev.year}</span>
+            </div>
+            <h3 class="font-mono text-[14px] font-bold text-white mb-1">${ev.title}</h3>
+            <p class="text-[13px] text-slate-300 leading-relaxed">${ev.description}</p>
+          `;
+          wrapper.appendChild(item);
+        });
+
+        container.appendChild(wrapper);
+      } else if (state.activeTab === 'timeline') {
+        const filtered = ARCHIVE_DATA.timeline.filter((era) => {
+          return (
+            era.title.toLowerCase().includes(q) ||
+            era.description.toLowerCase().includes(q) ||
+            era.period.toLowerCase().includes(q) ||
+            era.eraTag.toLowerCase().includes(q)
+          );
+        });
+
+        if (filtered.length === 0) {
+          container.innerHTML = renderEmptyState('Inga tidslinjehändelser matchade din sökning.');
+          return;
+        }
+
+        const headerCard = document.createElement('div');
+        headerCard.className = 'rounded-xl bg-noir-card border border-noir-border border-l-[3px] border-l-noir-cyan p-3.5 mb-4';
+        headerCard.innerHTML = `
+          <div class="font-mono text-[11px] font-bold tracking-[0.07em] text-noir-cyan uppercase mb-1">
+            MAKRO-HISTORIK // BLADE RUNNER UNIVERSE
+          </div>
+          <p class="text-[12.5px] text-slate-300 leading-relaxed">
+            De stora världsomvälvande milstolparna i Blade Runner-tidslinjen fram till och med nuvarande läsgräns (<span class="font-mono text-noir-amberBright">ÅR 2009</span>).
+          </p>
+        `;
+        container.appendChild(headerCard);
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'relative pl-5 border-l-2 border-noir-cyan/40 space-y-4 ml-2';
+
+        filtered.forEach((era) => {
+          const item = document.createElement('article');
+          item.className = 'relative rounded-xl bg-noir-card border border-noir-border p-4 shadow-md';
+          item.innerHTML = `
+            <span class="absolute -left-[27px] top-4 w-3.5 h-3.5 rounded-full bg-noir-bg border-2 border-noir-cyan shadow-[0_0_8px_rgba(45,212,191,0.6)]"></span>
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+              <span class="font-mono text-[11.5px] font-extrabold tracking-[0.06em] text-noir-amberBright uppercase">
+                ${era.period}
+              </span>
+              <span class="px-2 py-0.5 rounded bg-noir-cyanDark border border-noir-cyan/30 font-mono text-[10px] font-bold text-noir-cyan uppercase">
+                ${era.eraTag}
+              </span>
+            </div>
+            <h3 class="font-mono text-[14.5px] font-bold text-white mb-1.5">${era.title}</h3>
+            <p class="text-[13px] text-slate-300 leading-relaxed">${era.description}</p>
+          `;
+          wrapper.appendChild(item);
+        });
+
+        container.appendChild(wrapper);
+
+        const spoilerLockCard = document.createElement('div');
+        spoilerLockCard.className = 'mt-5 rounded-xl bg-noir-amberDark/80 border border-noir-amberBorder p-4 flex items-start gap-3';
+        spoilerLockCard.innerHTML = `
+          <svg class="w-5 h-5 text-noir-amber flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          <div>
+            <div class="font-mono text-[11.5px] font-bold tracking-[0.06em] text-noir-amberBright uppercase mb-1">
+              LÅST TIDSLINJE EFTER 2009
+            </div>
+            <p class="text-[12.5px] text-amber-100/80 leading-relaxed">
+              Kommande eror (Nexus-6, 2019, Blackout 2022, Wallace Corp &amp; 2049) hålls dolda och låses upp i takt med din läsning av kanon-verken.
+            </p>
+          </div>
+        `;
+        container.appendChild(spoilerLockCard);
+      }
+    }
+
+    function renderEmptyState(message) {
+      return `
+        <div class="rounded-xl bg-noir-card border border-noir-border p-6 text-center space-y-2">
+          <div class="font-mono text-xs text-noir-amber uppercase">INGA TRÄFFAR I DATABASEN</div>
+          <p class="text-sm text-noir-muted">${message}</p>
+        </div>
+      `;
+    }
+
+    function openCharacterModal(characterId) {
+      const char = ARCHIVE_DATA.characters.find((c) => c.id === characterId);
+      if (!char) return;
+
+      state.selectedCharacterId = characterId;
+
+      document.getElementById('detail-category-badge').textContent = char.badge;
+      document.getElementById('detail-name').textContent = char.name;
+      document.getElementById('detail-subtitle').textContent = char.subtitle;
+      document.getElementById('detail-initials').textContent = char.initials;
+      document.getElementById('detail-born').textContent = char.born;
+      document.getElementById('detail-birthplace').textContent = char.birthplace;
+      document.getElementById('detail-occupation').textContent = char.occupation;
+      document.getElementById('detail-status').textContent = char.status;
+      document.getElementById('detail-family').textContent = char.family;
+      document.getElementById('detail-affiliation').textContent = char.affiliation;
+      document.getElementById('detail-first-appearance').textContent = char.firstAppearance;
+
+      const quoteBox = document.getElementById('detail-quote-box');
+      if (char.quote) {
+        document.getElementById('detail-quote').textContent = char.quote;
+        quoteBox.classList.remove('hidden');
+      } else {
+        quoteBox.classList.add('hidden');
+      }
+
+      const bioContainer = document.getElementById('detail-bio');
+      bioContainer.innerHTML = char.bio.map((p) => `<p>${p}</p>`).join('');
+
+      updateDetailPortraitUI(characterId);
+
+      document.getElementById('main-list-view').classList.add('hidden');
+      document.getElementById('character-detail-view').classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function closeCharacterModal(shouldRender = true) {
+      state.selectedCharacterId = null;
+      document.getElementById('character-detail-view').classList.add('hidden');
+      document.getElementById('main-list-view').classList.remove('hidden');
+      if (shouldRender) {
+        renderList();
+      }
+    }
+
+    function updateDetailPortraitUI(characterId) {
+      const portraits = loadPortraits();
+      const imgData = portraits[characterId];
+      const imgEl = document.getElementById('detail-portrait-img');
+      const placeholderEl = document.getElementById('detail-portrait-placeholder');
+      const resetBtn = document.getElementById('reset-portrait-btn');
+
+      if (imgData) {
+        imgEl.src = imgData;
+        imgEl.classList.remove('hidden');
+        placeholderEl.classList.add('hidden');
+        resetBtn.classList.remove('hidden');
+      } else {
+        imgEl.src = '';
+        imgEl.classList.add('hidden');
+        placeholderEl.classList.remove('hidden');
+        resetBtn.classList.add('hidden');
+      }
+    }
+
+    function handlePortraitUpload(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file || !state.selectedCharacterId) return;
+
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const img = new Image();
+        img.onload = function () {
+          const canvas = document.createElement('canvas');
+          const MAX_WIDTH = 420;
+          let width = img.width;
+          let height = img.height;
+
+          if (width > MAX_WIDTH) {
+            height = Math.round((height * MAX_WIDTH) / width);
+            width = MAX_WIDTH;
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+
+          const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.82);
+          const portraits = loadPortraits();
+          portraits[state.selectedCharacterId] = compressedDataUrl;
+
+          if (savePortraits(portraits)) {
+            updateDetailPortraitUI(state.selectedCharacterId);
+            showToast('Porträtt sparat i arkivet.');
+          }
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+      event.target.value = '';
+    }
+
+    function resetCharacterPortrait() {
+      if (!state.selectedCharacterId) return;
+      const portraits = loadPortraits();
+      delete portraits[state.selectedCharacterId];
+      savePortraits(portraits);
+      updateDetailPortraitUI(state.selectedCharacterId);
+      showToast('Porträtt återställt.');
+    }
+
+    function exportBackup() {
+      const portraits = loadPortraits();
+      const backupPayload = {
+        app: 'BLADE RUNNER // CANON WIKI',
+        version: '1.7',
+        exportedAt: new Date().toISOString(),
+        portraits: portraits
+      };
+
+      const blob = new Blob([JSON.stringify(backupPayload, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'blade-runner-canon-wiki-backup-v1.7.json';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      showToast('Backup (JSON) nedladdad.');
+    }
+
+    function importBackup(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        try {
+          const parsed = JSON.parse(e.target.result);
+          const incomingPortraits = parsed.portraits || parsed;
+
+          if (typeof incomingPortraits !== 'object' || incomingPortraits === null) {
+            throw new Error('Ogiltigt backup-format');
+          }
+
+          const current = loadPortraits();
+          const merged = { ...current, ...incomingPortraits };
+          if (savePortraits(merged)) {
+            if (state.selectedCharacterId) {
+              updateDetailPortraitUI(state.selectedCharacterId);
+            } else {
+              renderList();
+            }
+            showToast('Backup importerad till arkivet.');
+          }
+        } catch (err) {
+          console.error(err);
+          showToast('Kunde inte läsa JSON-filen.');
+        }
+      };
+      reader.readAsText(file);
+      event.target.value = '';
+    }
+  </script>
+</body>
+</html>
