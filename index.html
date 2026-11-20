@@ -169,7 +169,7 @@
         <div class="mt-2 flex-shrink-0">
           <span class="block w-3 h-3 rounded-full bg-noir-amber pulse-dot"></span>
         </div>
-        <div class="leading-none">
+        <div class="leading-none cursor-pointer select-none" onclick="goHome()" onkeydown="if(event.key==='Enter')goHome()" role="button" tabindex="0" aria-label="Till startsidan">
           <h1 class="font-logo text-[19px] sm:text-[22px] font-normal tracking-[0.12em] text-noir-amberBright uppercase drop-shadow-[0_0_10px_rgba(245,158,11,0.35)]">
             BLADE RUNNER
           </h1>
@@ -606,7 +606,7 @@
             '<strong class="text-noir-amberBright font-mono text-[11px] tracking-[0.08em] uppercase">Bakgrund</strong><br>Efgenia, kallad Effie, Koropey växer först upp i en stad söder om Los Angeles. När staden förstörs av erosion flyttar familjen till slummen i Los Angeles (Origins #2). Nemo’s Diner, där hon senare träffar Cal, är byggd av spillror från hennes hemstad.',
             '<strong class="text-noir-amberBright font-mono text-[11px] tracking-[0.08em] uppercase">Arbetet på Tyrell</strong><br>Effie är Lydia Kines assistent och protegé. Tillsammans lyckas de med transferens, men Effie har ett stort ansvar i det som blir Nexus-5-projektet. När hon anställdes trodde hon att Tyrell bara skulle uppgradera Nexus-4, men hon och personalen fick i stället i uppdrag att skapa och ständigt uppgradera Nexus-5, som fick en besatthet av optimering (Origins #2). I en tillbakablick från 2008 ber Lydia Effie hjälpa till att övertala Nia Moreaux, eftersom både Effie och Nia vuxit upp i slummen, men Effie vägrar (Origins #10).',
             '<strong class="text-noir-amberBright font-mono text-[11px] tracking-[0.08em] uppercase">Fallet Lydia Kine (#1–#3)</strong><br>År 2009 är det Effie som hittar Lydias hängda kropp. När Cal Moreaux undersöker platsen är hon beredd att svara på hans frågor, men Ilora Stahl avbryter, tar över kontakten med LAPD och skickar ut henne ur rummet. Senare ringer Effie till Cal och berättar att en Nexus-5-prototyp rymde natten då Lydia dog (Origins #1).',
-            'När Effie försöker nå Lydias filer får hon besök av Stahl, som säger att Lydia tycks ha raderat sina dokument före sin död. Stahl ber henne också lämna ut allt Lydia kan ha berättat. Effie träffar sedan Cal på Nemo’s Diner och avslöjar vad hon vet om Nexus-5, främst besattheten av optimering. Han föreslår att de håller sig gömda och undrar varför replikanter görs så lika människor (Origins #2).',
+            'När Effie försöker nå Lydias filer får hon besök av Stahl, som säger att Lydia tycks ha raderat sina dokument före sin död. Stahl ber henne också lämna ut allt Lydia kan ha berättat. Effie träffar sedan Cal på Nemo’s Diner och avslöjar vad hon vet om Nexus-5, främst besattheten av optimering. Han föreslår att de håller sig gömda och undrar varför replikanter görs så lika människor. Effie hämtar också Marcus från polisstationen tillsammans med annan Tyrell-personal, då spinnern attackeras (Origins #2).',
             'Hemma hos Cal hör Effie honom prata i sömnen och frågar om han har förlorat någon, vilket han nekar till. De kritiserar varandras yrkesval och bestämmer sig för att dela på sig: Cal går till Lydias lägenhet för att hitta ett sätt att döda Nexus-5, och Effie åker till sin egen för att hämta filer som kan fälla Tyrell. Där väntar Stahl, som har hittat filer om Lydias transferens, men Effie säger att hon inget vet (Origins #3).',
             '<strong class="text-noir-amberBright font-mono text-[11px] tracking-[0.08em] uppercase">Sista dagen (#4)</strong><br>Från en taxi ser Effie hur Cal jagar Asa genom gatorna. Hon lämnar taxin och försöker stoppa Cal för att berätta något, men när jakten leder in på ett museum skjuter Stahl henne till döds (Origins #4). Cal låter Asa ta farväl, och de håller en minnesstund för henne (Origins #4).',
             '<strong class="text-noir-amberBright font-mono text-[11px] tracking-[0.08em] uppercase">Eftermäle (#12)</strong><br>Efter upproret skyller LAPD det på Lydia och Effie. Hennes forskning används av Asa för att bygga ett Voight-Kampff-test (Origins #12).'
@@ -617,23 +617,23 @@
           name: 'Ilora Stahl',
           initials: 'IS',
           faction: 'tyrell',
-          subtitle: 'Direktör, Tyrell Corporation',
+          subtitle: 'Tyrell-direktör och chef för Excel Program (smeknamn: Ilchen)',
           badge: 'TYRELL // LEDNING',
           born: 'Okänt',
           birthplace: 'Okänt',
-          occupation: 'Tyrell-direktör, Tyrells representant gentemot LAPD',
-          status: 'Tyrells ansikte utåt, kontrollerar rapporter om rymda replikanter (#12)',
-          family: 'Okänt',
+          occupation: 'Tyrell-direktör, chef för Excel Program, Tyrells representant gentemot LAPD',
+          status: 'Aktiv hos Tyrell. Cal har lovat att gå efter henne (#12)',
+          family: 'Föräldrar, Sabin (bror), Georgia (syster), ytterligare ett syskon',
           affiliation: 'Tyrell Corporation',
           firstAppearance: 'Blade Runner Origins #1',
-          summary: 'Eldon Tyrells hårda representant som styr utredningen av Lydia Kines död och mördar Effie i #4.',
+          summary: 'Eldon Tyrells hårda representant som leder Excel Program, ordnar Nias transferens, dödar Effie och bränner slummen.',
           bio: [
-            'Ilora Stahl är en högt uppsatt Tyrell-direktör som Eldon Tyrell själv valt för att hantera allt LAPD frågar om kring Lydia Kines död. I #1 blockerar hon Cals frågor och påstår att allt redan skickats till polisen. Hon säger även att hans förmågor skulle göra större nytta hos Tyrell.',
-            'I #2 och #3 överlever hon spinnerkraschen och kallas till videomöte med Eldon Tyrell. Hennes assistent Osha hämtar henne. Därefter hittar hon filer hos Effie som avslöjar att Lydia upptäckt medvetandeöverföring.',
-            'I #4 ansluter hon till jakten på Asa och skjuter Effie på museet. Därefter beordrar hon Cal att eliminera en förrymd Nexus-5 och hitta Marcus.',
-            'I #5 konfronterar hon Cal på sjukhuset efter Arnaults död, men han sätter henne på plats och hon går därifrån.',
-            'I #6 får hon veta att Nexus-4-replikanter mördar sina ägare, vilket blir en PR-mardröm för Tyrell. Hon möter Sgt. Gutman för att få dödsfallen mörklagda, men han vägrar och föreslår att Cal ska göra det.',
-            'I #7–#9 är hon chef för Tyrells hemliga program för att överföra mänskligt medvetande till replikanter. När hon jagar Nia startar hon ett storanfall mot Sektor 6B med ordern att eliminera allt motstånd (#9). I #10 kallas hon till Eldon Tyrell, som håller henne ansvarig och kräver att hon lagar skadan och hindrar det från att hända igen. I #11 intervjuas hon och snurrar katastrofen till Tyrells fördel. I #12 försäkrar hon invånarna på en presskonferens att Tyrell och Blade Runner Unit håller dem säkra, och talar sedan om för Cal att samtal om rymda replikanter ska gå via hennes kontor. Bakom stängda dörrar hatar de varandra.'
+            '<strong class="text-noir-amberBright font-mono text-[11px] tracking-[0.08em] uppercase">Barndom (#7)</strong><br>Som barn, kallad Ilchen, hjälper Ilora sin far vid inbrott för att familjen ska få mat. En gång efter ett stöldgods från en elektronikbutik, som de lämnar in på pantbank, belönar hennes far henne med ett äpple. Samma natt fattar familjens bostadshus eld, och Ilora lyckas fly men lämnar kvar sin familj och de andra boende. Familjen bestod av hennes föräldrar, brodern Sabin, systern Georgia och ytterligare ett syskon. Barndomstraumat återkommer för henne i #7 (Origins #7).',
+            '<strong class="text-noir-amberBright font-mono text-[11px] tracking-[0.08em] uppercase">Excel Program (2008)</strong><br>Tidigt i sin karriär på Tyrell Corporation leder Stahl Excel Program, som ska ersätta yrken som läraryrket med replikanter och ge de människor som tränar dem bättre jobb efteråt. Programmet möter motstånd, så Stahl vill använda Dr. Lydia Kines Nexus-5-projekt för att skapa någon som kan främja det. Femteklasslärarinnan Nia Moreaux utpekas som perfekt kandidat, men Stahl möts bara av fientlighet. Veckor senare skadas Nia i ett attentat mot programmet, och Stahl beordrar att hennes ambulans avlyssnas. Nias medvetande förs över till Kines prototyp (Origins #10).',
+            '<strong class="text-noir-amberBright font-mono text-[11px] tracking-[0.08em] uppercase">Fallet Lydia Kine (#1–#5)</strong><br>År 2009 utses Stahl av Eldon Tyrell att hantera LAPD:s frågor om Lydia Kines död. När Cal Moreaux försöker förhöra Effie skickar hon ut henne, insisterar på att svara själv och säger att allt redan skickats till polisen. Hon säger även att hans förmågor vore bättre använda hos Tyrell (Origins #1). Hon besöker Effie när denna försöker nå Lydias filer, upplyser henne om att Lydia raderat allt och ber henne berätta vad Lydia kan ha sagt. Effie och annan Tyrell-personal hämtar Marcus från polisstationen, men spinnern attackeras (Origins #2).',
+            'Stahl överlever kraschen och beordrar en grundlig utredning, men hämtas av sin assistent Osha när hon kallas till ett möte med Eldon Tyrell. Hon hittar sedan filer hos Effie som visar att Lydia upptäckt transferens, men Effie påstår att hon inget vet (Origins #3). Hon ansluter till Cals jakt på Nexus-4:an Asa, och när den leder in på ett museum skjuter hon Effie (Origins #4). Efter replikanten Arnaults död konfronterar hon Cal på sjukhuset där hans syster ligger, men han skäller ut henne och hon lämnar stället, rynkande på pannan i hissen (Origins #5).',
+            '<strong class="text-noir-amberBright font-mono text-[11px] tracking-[0.08em] uppercase">Slummen i lågor (#6–#9)</strong><br>Hon träffar Gutman för att få honom att mörklägga dödsfallen kring Nexus-5-fallet, men han vägrar och föreslår att Cal gör det (Origins #6). Marcus avslöjar att både Nexus-5:an och Asa, med Lydias medvetande, flytt från högkvarteret. Stahl ursäktar sig och går till förrådet för stridsreplikanter, säker på att hon har läget under kontroll (Origins #7). Hon leder en grupp Nexus-3-replikanter och Marcus till marknaden i slummen och beordrar eldkastarpersonal att sätta den i brand (Origins #8). När marknaden är nästan förstörd beordrar hon att hela slummen ska förgöras. När hon ser Cal gå till motanfall låter hon sin milis koncentrera elden mot honom och flyr i en spinner (Origins #9).',
+            '<strong class="text-noir-amberBright font-mono text-[11px] tracking-[0.08em] uppercase">Följderna (#10–#12)</strong><br>Eldon Tyrell skyller bråket på Nia helt på Stahl, som lämnas ansvarig för att reparera skadorna och förhindra uppror hos framtida replikanter (Origins #10). I en direktsänd tv-intervju bekräftar hon att Excel Program misslyckats men lovar specialiserade replikanter för att reparera skadorna i slummen. När hon börjar beskriva nästa Nexus-replikant avbryts hon av Nia, som riktar en pistol mot henne. Cal bryter in och skjuter Nia i hjärtat (Origins #11). Under de följande två månaderna hjälper Tyrell till att bilda LAPD:s Blade Runner Unit med Cal som förste medlem. Trots vad Stahl säger vid en presskonferens hanterar polisen inte samtal om rymda replikanter utan hennes kontor. Cal, som räddat hennes liv och blivit hennes underordnade, varnar att han ska gå efter henne (Origins #12).'
           ]
         },
         {
@@ -641,20 +641,29 @@
           name: 'Eldon Tyrell',
           initials: 'ET',
           faction: 'tyrell',
-          subtitle: 'Grundare & VD, Tyrell Corporation',
+          subtitle: 'Grundare och VD, Tyrell Corporation',
           badge: 'TYRELL // GRUNDARE',
           born: 'Okänt',
-          birthplace: 'Okänt',
-          occupation: 'Grundare och VD, Tyrell Corporation',
+          birthplace: 'Bergen i Edens, Kalifornien',
+          occupation: 'Vetenskapsman och företagsledare, grundare av Tyrell Corporation',
           status: 'VD för Tyrell Corporation (2009)',
-          family: 'Okänt',
+          family: 'Alice (yngre syster)',
           affiliation: 'Tyrell Corporation',
-          firstAppearance: 'Blade Runner (1982) / Origins #3',
-          summary: 'Mannen bakom Tyrell Corporation, vars bolag vid denna tid börjar sin klättring mot dominans med Nexus-fasens replikanter.',
+          firstAppearance: 'Blade Runner (1982). I Origins omnämnd i #1 och #3, framträder i #10',
+          summary: 'Dr. Eldon Tyrell, mannen bakom replikanterna, som håller Stahl ansvarig för slummens undergång och försöker hindra framtida uppror.',
           bio: [
-            'Eldon Tyrell leder Tyrell Corporation, bolaget som utvecklat robotar till Nexus-fasen och replikanter som är nästan identiska med människor. År 2009 är bolaget redan mäktigt men har ännu inte nått sin senare dominans.',
-            'Det var Eldon som valde Ilora Stahl att hantera polisens frågor kring Lydia Kines död. I #3 kallar han henne till videomöte efter spinnerkraschen.',
-            'I #10 håller han Stahl ansvarig för förödelsen efter de väckta replikanterna och beordrar henne att reparera skadan och hindra att det händer igen. Efter #12 är Blade Runner Unit i praktiken finansierad av Tyrell.'
+            '<strong class="text-noir-amberBright font-mono text-[11px] tracking-[0.08em] uppercase">Uppväxt</strong><br>Dr. Eldon Tyrell är grundare och företagsledare av Tyrell Corporation, bolaget som utformar, tillverkar och säljer de människoliknande slavarna som kallas replikanter. Han växer upp fattigt i en stuga i bergen i Edens, Kalifornien. På tomten begraver han en uggla och funderar på om man kan besegra döden. Han har en yngre syster, Alice, som han anförtror en dagbok att ta hand om.',
+            '<strong class="text-noir-amberBright font-mono text-[11px] tracking-[0.08em] uppercase">Nexus-fasen</strong><br>År 1999 spelar Tyrell in ett videomeddelande som tillkännager lanseringen av Nexus-1 året därpå.',
+            '<strong class="text-noir-amberBright font-mono text-[11px] tracking-[0.08em] uppercase">2009 (Origins)</strong><br>När Lydia Kine dör skylls det internt på Nexus-4-modellen 4-331575, och Tyrell träffar Rhea McCallister och Charles Edevane för att uttrycka sin oro. Bolaget mörkar dödsfallet som ett självmord, och Tyrell utser Ilora Stahl att hantera LAPD:s frågor (Origins #1). Stahl kallas till möte med honom efter spinnerkraschen (Origins #3).',
+            'Efter att Nexus-5-prototypen Nia Moreaux väckt ett antal Nexus-4-replikanter, och en rad attacker som slutar med att slummen sätts i brand på Stahls order, håller Tyrell henne helt ansvarig. Han beordrar henne att reparera skadorna och hindra att framtida replikanter gör uppror (Origins #10).'
+          ],
+          later: [
+            'Förekomster i andra verk: Blade Runner (film, 1982) och Blade Runner (1997, tv-spel), omnämnd i Blade Runner 2049, Blade Runner 2019, Blade Runner 2029, Blade Runner: Black Lotus (anime och serie), rollspelet Blade Runner: The Roleplaying Game samt Blade Runner 2039. I Origins syns han bara i #10, och är endast omnämnd i #1 och #3.',
+            'Replikantmodellerna: Nexus-6-replikanten Yotun skapas 2016 och får delar av Tyrells minnen. Hans brorsdotter Lilith har minnen som används till det experimentella Nexus-7, Rachael, som skapas 2018. Tyrell använder Rachael som sin assistent och berättar aldrig att hon är en replikant, så hon tror att hon är människa. Han skapar också en Nexus-7 efter sin vän Alexander Selwyns avlidna fru. Han utvecklar även en dödlig farsot för replikanter, med kodnamn Night Owl, som en nödbroms om replikanter skulle bli för farliga.',
+            'Privatliv: Tyrell är en mästerlig schackspelare som bara förlorat två gånger mot J.F. Sebastian, den andra gången eftersom Roy Batty gav Sebastian dragen. Han spelade även mot Lilith, som aldrig kunde slå honom. Han äger också en konstgjord uggla.',
+            'November 2019: Tyrell möter Blade Runnern Rick Deckard, som kommer för att utföra Voight-Kampff-test på en Nexus-6 efter order av kapten Harry Bryant. Tyrell vill först se ett negativt testresultat innan Deckard får testa en replikant och föreslår Rachael, men Deckard upptäcker att hon är en experimentell replikant med inplanterade minnen och därför svårare att avslöja. Han träffar kort även den nye Blade Runnern Ray McCoy om en av hans seniora tekniker i Gravity Lab. Han hotas av Nexus-6-replikanten Clovis, som kräver Nexus-6-DNA för att förlänga sin livslängd, men livslängden på fyra år går inte att ändra och Tyrells säkerhetsfolk stoppar Clovis. Han träffar även guvernör Maurice Kolvig för att få replikanter att arbeta som slavarbetare på jorden, men guvernören dödas av Clovis.',
+            'Död: Roy Batty, ledare för de förrymda replikanterna, använder Tyrells och Sebastians schackparti för att ta sig in i Tyrells bostad och kräva mer liv. Tyrell förblir mestadels lugn och förklarar att det är dödligt att ändra DNA. Han försöker trösta Roy och kallar honom sin förlorade son. Roy kysser honom och krossar sedan hans skalle, medan Sebastian ser på. Både Tyrell och Sebastian hittas döda av polisen.',
+            'Eftermäle: Ledningen går över till hans brorsdotter Lilith. Eftersom han dog på det sättet hamnar Nexus-6 i ännu större kontrovers, och Nexus-8 rusas ut på marknaden. Nexus-7 sätts aldrig i full produktion eftersom hans hemliga forskning gick förlorad. Efter Blackout och förbudet mot replikanttillverkning går bolaget under, och dess tillgångar köps av Canaan Corporation och till slut Wallace Corporation. Niander Wallace lämnar rummet där Tyrell dog orört, som ett minnesmärke över hans övermod.'
           ]
         },
         {
@@ -662,21 +671,23 @@
           name: 'Nia Moreaux',
           initials: 'NM',
           faction: 'others',
-          subtitle: 'Cals syster och Nexus-5:an',
+          subtitle: 'Lärare, Cals syster och Nexus-5',
           badge: 'REPLIKANT // NEXUS-5',
           born: 'Okänt',
-          birthplace: 'Slummen i Los Angeles (Sektor 6B)',
-          occupation: 'Före detta lärare. Nexus-5 och ledare för väckta replikanter',
-          status: 'Avliden. Pensionerad av sin bror Cal (#11)',
-          family: 'Cal Moreaux (bror)',
+          birthplace: 'Slummen i Los Angeles',
+          occupation: 'Lärare i femte klass (Kindred Elementary School). Därefter Nexus-5 och ledare för väckta replikanter',
+          status: 'Avliden. Nexus-5-kroppen skjuts av Cal (#11). Hennes mänskliga kropp låg katatonisk på sjukhus',
+          family: 'Cal Moreaux (bror), Isaac (älskare), Desiree (barndomsvän)',
           affiliation: 'Egen grupp av väckta replikanter',
-          firstAppearance: 'Blade Runner Origins #1 (omnämnd). Som Nexus-5 från #7',
-          summary: 'Cals syster, tidigare lärare, vars medvetande fördes över till en Nexus-5. Hon väcker replikanter och startar upproret i Sektor 6B.',
+          firstAppearance: 'Blade Runner Origins #1 (mänsklig kropp). Som Nexus-5 från #7',
+          summary: 'Lärare vars medvetande fördes över till en Nexus-5 efter en explosion. Hon väcker replikanter och ber sedan sin egen bror att skjuta henne.',
           bio: [
-            'Nia Moreaux är Cal Moreauxs syster. I #1 ligger hon katatonisk på sjukhus, och i #5 besöker Cal henne dit. I #7 visar det sig att hon är den förrymda Nexus-5:an som Tyrell och Cal har jagat. Som Nexus-5 väcker hon replikanter ur tjänst till självmedvetenhet och bygger en grupp i Sektor 6B.',
-            'I #8 attackerar hon Asa i raseri, men avleds av ett barn. I #9 hjälper hon Cal och Asa rädda invånarna när Stahl anfaller slummen.',
-            'I #10 avslöjas hennes bakgrund. 2008 är hon lärare i femte klass och ansvarar för tre Nexus-4-replikanter som tränas för att ersätta lärare. Hon blir vän med Isaac, som ger henne ett äpple. De fångas i en explosion som skadar henne svårt, Stahl ser till att Tyrell tar henne till Lydias labb, där hennes medvetande förs över till en Nexus-5.',
-            'Efter attacken, där hon förlorat flera, föreslår hon att gruppen ska mörda Stahl. Cal motsätter sig det, men hon går med Desiree. I #11 tar de sig till sändningsstudion där Stahl intervjuas, och Cal skjuter sin egen syster på hennes begäran.'
+            '<strong class="text-noir-amberBright font-mono text-[11px] tracking-[0.08em] uppercase">Uppväxt</strong><br>Nia växer upp i slummen i Los Angeles tillsammans med sin bror Cal och deras vän Desiree (Origins #6).',
+            '<strong class="text-noir-amberBright font-mono text-[11px] tracking-[0.08em] uppercase">Läraren (2008)</strong><br>År 2008 är Nia lärare i femte klass på Kindred Elementary School. Det året får hon i uppgift att träna tre Nexus-4-replikanter inom Tyrell Corporations Excel Program, som ska ersätta lärarkåren med replikanter och ge människor utbildning till bättre jobb när övergången är klar. Nia ogillar programmet starkt och är sträng mot replikanterna. På en rökpaus möter hon Ilora Stahl, som leder Excel Program, och brusar ut i vrede över hur projektet stör livet för dem som bor i sektorn (Origins #10).',
+            '<strong class="text-noir-amberBright font-mono text-[11px] tracking-[0.08em] uppercase">Isaac och explosionen</strong><br>Två veckor in i träningen besöker replikanten Isaac henne i klassrummet, där hon arbetar i stället för att äta lunch med de andra lärarna. Han ger henne ett dekorativt äpple, en gammal gest från elev till lärare som symboliserar kunskap. Isaac har läst hennes uppsats om empatisk pedagogik för att kunna hjälpa känslomässigt utsatta elever, och hon bjuder med honom på lunch. Innan de hinner prata mer fångas de i en explosion som skadar henne svårt (Origins #10).',
+            '<strong class="text-noir-amberBright font-mono text-[11px] tracking-[0.08em] uppercase">Två kroppar</strong><br>Tyrell avlyssnar Nias ambulans och för henne till Dr. Lydia Kines labb, där hennes medvetande förs över till en Nexus-5-prototyp (Origins #10). Nia blir rasande på Lydia när hon vaknar, eftersom den nya kroppen inte känns rätt (Origins #7). Hennes mänskliga kropp läggs in på sjukhus i katatoniskt tillstånd, och Cal besöker henne regelbundet. Sjuksköterskan Dante vårdar henne (Origins #1).',
+            '<strong class="text-noir-amberBright font-mono text-[11px] tracking-[0.08em] uppercase">Upprorets ledare (#7–#9)</strong><br>Som Nexus-5 väcker Nia andra replikanter ur tjänst och leder en liten grupp i Sektor 6B. När Cal och Asa konfronterar gruppen attackerar hon Asa i raseri men avleds av ett barn (Origins #8). När Stahl anfaller slummen hjälper hon till att rädda invånare, och hon förlorar bland andra sin älskare Isaac (Origins #9).',
+            '<strong class="text-noir-amberBright font-mono text-[11px] tracking-[0.08em] uppercase">Sista begäran och död (#10–#11)</strong><br>Nia vill mörda Stahl, och Cal invänder att det skulle göra varje replikant till ett mål (Origins #10). Hennes verkliga plan är en annan: hon ber Cal skjuta henne i hjärtat under Stahls direktsända intervju, så att alla ser hennes ansikte och förstår att replikanter ser ut som människor. Hon tar med Desiree till Tyrells högkvarter och håller sedan Stahl under hot i tv-studion, där Cal gör som hon bett (Origins #11).'
           ]
         },
         {
@@ -702,17 +713,16 @@
           ]
         },
         {
-          id: 'divina', from: 5, name: 'Divina', initials: 'DI', faction: 'others',
-          subtitle: 'Hjälpare på La Plume Sauvage', badge: 'LA PLUME SAUVAGE // KONTAKT',
-          born: 'Okänt', birthplace: 'Okänt', occupation: 'Okänt, knuten till La Plume Sauvage',
-          status: 'Delar information med Marcus och Asa (#6)', family: 'Okänt', affiliation: 'La Plume Sauvage',
-          firstAppearance: 'Blade Runner Origins #5',
-          summary: 'Hjälpare på La Plume Sauvage, där Asa och Marcus gömmer sig. Hon fungerar som en klok samtalspartner om identitet och förändring.',
+          id: 'divina', from: 1, name: 'Divina', initials: 'DI', faction: 'others',
+          subtitle: 'Drag queen och ägare till La Plume Sauvage', badge: 'LA PLUME SAUVAGE // ÄGARE',
+          born: 'Okänt', birthplace: 'Okänt', occupation: 'Ägare av La Plume Sauvage, drag queen',
+          status: 'Ger skydd åt flyktingreplikanter (#12)', family: 'Avery (tidigare partner, avliden)', affiliation: 'La Plume Sauvage',
+          firstAppearance: 'Blade Runner Origins #1',
+          summary: 'Drag queen och ägare till La Plume Sauvage, Cals vän och tidigare Averys partner, som blir en tillflykt för både människor och replikanter.',
           bio: [
-            'Divina finns på La Plume Sauvage, platsen dit Asa tar Marcus Kine för säkerhets skull efter #4. I #5 tror hon att Arnaults felfunktion kan vara en existentiell kris, medan Asa betvivlar att en Nexus-4 kan tänka så.',
-            'I #6 delar hon viktig information med Marcus och Asa och för därefter ett samtal med Marcus om Asas förvandling. Det samtalet hjälper honom förstå identitet och förändring.',
-            'I #10 har Stahls män förstört La Plume Sauvage. I #12 skyddar hon och Asa replikanter från förföljelse.',
-            'Divina var tidigare tillsammans med Avery, Cals kapten på Kalanthia, som dödades av en replikantsoldat.'
+            '<strong class="text-noir-amberBright font-mono text-[11px] tracking-[0.08em] uppercase">Bakgrund</strong><br>Divina är drag queen och ägare till baren La Plume Sauvage i Los Angeles. Divina var tillsammans med Avery, Cals kapten på Kalanthia, tills han dödades av en replikant i off-world-kolonierna (Origins #5). Cal har blivit stamgäst på baren och är en vän.',
+            '<strong class="text-noir-amberBright font-mono text-[11px] tracking-[0.08em] uppercase">Lydia Kine-fallet (#1–#6)</strong><br>År 2009 berättar Cal för Divina om fallet han fått, Tyrell-ingenjören Lydia Kines död. Divina försöker avråda honom från att ta anställning hos Tyrell, för Nias skull (Origins #1). Cal tar senare Marcus Kine till baren för hans säkerhet (Origins #4), och Divina ger honom småjobb så att tiden går. I #5 hjälper Asa att ta den felfungerande Arnault dit. Asa kan inte avgöra vad som är fel med honom, och Divina gissar att han kanske upplever en existentiell kris. Asa kommer även till Divina för råd om hur han ska laga relationen till Marcus, och Divina svarar att Marcus kanske bara inte förstår situationen (Origins #5). Divina uppmuntrar sedan Marcus att följa med Asa i jakten på en mördare (Origins #6).',
+            '<strong class="text-noir-amberBright font-mono text-[11px] tracking-[0.08em] uppercase">Anfallet och efteråt (#9–#12)</strong><br>Stahls anfall lämnar La Plume Sauvage i oordning. Eftersom Divina känner till Marcus roll i förstörelsen förbjuder Divina Marcus att komma in (Origins #9). Divina ber sedan Asa om ursäkt, men Asa är inte arg, eftersom han förstår att det var rätt (Origins #10). Efter Nias död och bildandet av LAPD:s Blade Runner Unit hjälper Divina till att ge skydd åt flyktingreplikanter (Origins #12).'
           ]
         },
         {
@@ -729,15 +739,17 @@
           ]
         },
         {
-          id: 'gutman', from: 6, name: 'Sgt. Gutman', initials: 'GU', faction: 'lapd',
-          subtitle: 'Korrupt LAPD-sergeant', badge: 'LAPD // SERGEANT',
-          born: 'Okänt', birthplace: 'Okänt', occupation: 'Sergeant, LAPD',
-          status: 'I konflikt med Stahl (#6)', family: 'Okänt', affiliation: 'LAPD',
-          firstAppearance: 'Blade Runner Origins #6',
-          summary: 'Korrupt polis som gör kårens smutsiga arbete och vägrar tvätta bort Tyrells problem åt Stahl.',
+          id: 'gutman', from: 1, name: 'Peter Gutman', initials: 'PG', faction: 'lapd',
+          subtitle: 'LAPD-sergeant, Cals chef', badge: 'LAPD // SERGEANT',
+          born: 'Okänt', birthplace: 'Okänt', occupation: 'Polissergeant, LAPD',
+          status: 'Pressas av Stahl att mörklägga replikantmord (#6)', family: 'Okänt', affiliation: 'LAPD',
+          firstAppearance: 'Blade Runner Origins #1',
+          summary: 'Cal Moreauxs sergeant, som vill att fallet Lydia Kine ska avskrivas som självmord och som vägrar Stahls begäran om mörkläggning.',
           bio: [
-            'Sergeant Gutman är en korrupt LAPD-polis som tillåter kåren att blunda för det som inte passar. I #6 träffar Stahl honom för att få honom att mörklägga dödsfallen kring Nexus-5-fallet.',
-            'Gutman vägrar och föreslår att hon i stället ska få Cal Moreaux att ta hand om det. Relationen mellan honom och Stahl blir ansträngd.'
+            '<strong class="text-noir-amberBright font-mono text-[11px] tracking-[0.08em] uppercase">Kritiskt fall (#1–#2)</strong><br>Peter Gutman är sergeant vid LAPD och Cal Moreauxs chef. År 2009 ger han Cal i uppdrag att fylla i pappersarbetet kring Dr. Lydia Kines till synes självmord. Lydias arbetsgivare, Tyrell Corporation, har bett om diskretion i fallet (Origins #1).',
+            'På bårhuset visar Cal kroppen för Gutman, som uttrycker sitt missnöje över att Cal faktiskt utreder fallet i stället för att bara foga sig efter Tyrell och fylla i papper. Cal insisterar på att det inte var självmord, och Gutman lämnar honom åt sitt öde och förklarar honom umbärlig tills han har rättat till situationen (Origins #2).',
+            '<strong class="text-noir-amberBright font-mono text-[11px] tracking-[0.08em] uppercase">Cals lögn (#4)</strong><br>Senare går Cal till Gutman och säger att han kommit fram till att Lydias död ändå var självmord (Origins #4).',
+            '<strong class="text-noir-amberBright font-mono text-[11px] tracking-[0.08em] uppercase">Stahls begäran (#6)</strong><br>Ilora Stahl vädjar till Gutman att mörklägga mordfall som har koppling till replikanter, men han vägrar och lägger i stället ansvaret på Cal (Origins #6).'
           ]
         },
         {
@@ -876,6 +888,18 @@
             'Dr. Chen är en man som 2009 arbetar som rättsläkare i Los Angeles. När Lydia Kines till synes självmord upptäcks underrättas han och kallas till platsen av Tyrell Corporation (Origins #1).',
             'Han nämns bara i det första numret, och källorna ger inget mer om honom.'
           ]
+        },
+        {
+          id: 'dante', from: 1, name: 'Dante', initials: 'DA', faction: 'others',
+          subtitle: 'Sjuksköterska som vårdar Nia', badge: 'SJUKHUSET // SJUKSKÖTERSKA',
+          born: 'Okänt', birthplace: 'Okänt', occupation: 'Sjuksköterska',
+          status: 'Okänt', family: 'Okänt', affiliation: 'Sjukhuset där Nia vårdas',
+          firstAppearance: 'Blade Runner Origins #1',
+          summary: 'Sjuksköterska som tar hand om Nia Moreaux, och som tydligt bryr sig om henne.',
+          bio: [
+            'Dante är en sjuksköterska som vårdar Nia Moreaux på sjukhuset. När Cal besöker sin syster ser han Dante stå utanför dörren och noterar att han måste ha sovit i sin bil natten innan, eftersom han har samma kläder som dagen före.',
+            'De två är överens om att Nia, som är katatonisk, inte är utan hopp (Origins #1). Han nämns bara i det första numret.'
+          ]
         }
       ],
 
@@ -886,8 +910,8 @@
           description: 'Los Angeles polis. Cal utreder här Lydias död, men korrupta sergeanter som Gutman blundar för det som inte passar.' },
         { id: 'kine-apartment', name: 'Lydia Kines lägenhet', type: 'PLATS // BOSTAD', sector: 'Los Angeles', firstAppearance: '#3',
           description: 'Här förvaras Lydias teckningar av Asa. Cal ställer Asa mot väggen här i #4 och jakten sträcker sig vidare till ett museum.' },
-        { id: 'la-plume-sauvage', name: 'La Plume Sauvage', type: 'PLATS // TILLFLYKT', sector: 'Los Angeles', firstAppearance: '#4',
-          description: 'Dit Asa och Cal tar Marcus för hans säkerhet. Divina finns här, och även den felfungerande Arnault förs hit.' },
+        { id: 'la-plume-sauvage', name: 'La Plume Sauvage', type: 'PLATS // BAR', sector: 'Los Angeles', firstAppearance: '#1',
+          description: 'Divinas bar i Los Angeles, där Cal är stamgäst. Här sätts Marcus och den felfungerande Arnault i säkerhet. Stahls anfall lämnar stället i spillror (#9), och efter Nias död ger Divina skydd åt flyktingreplikanter här (#12).' },
         { id: 'the-slums', name: 'Slummen (Sektor 6B)', type: 'OMRÅDE // STADSDEL', sector: 'Los Angeles', firstAppearance: '#6',
           description: 'En eftersatt och bortglömd del av Los Angeles, Cals hemtrakter och landsförvisningsplats, Sektor 6B. Här möter han Carlisles grupp i #6 och får veta vem Nexus-5:an är i #7.' },
         { id: 'kalanthia', name: 'Kalanthia', type: 'PLATS // OFF-WORLD-KOLONI', sector: 'Off-world', firstAppearance: '#1',
@@ -900,12 +924,26 @@
         { id: 'cheshire', work: 'tokyo', from: 1, name: 'Cheshire Group', type: 'FÖRETAG // SKUGGBOLAG', sector: 'Tokyo', firstAppearance: 'Tokyo Nexus #1',
           description: 'Hemligt rivaliserande bolag (yami kigyo), finansierat av en Yakuza-familj. Utvecklar egna stridsreplikanter och vill skapa en ny generation. Tyrell vill krossa dem.' },
         { id: 'undercity', work: 'tokyo', from: 8, name: 'Undercity', type: 'PLATS // UNDERJORD', sector: 'Tokyo', firstAppearance: 'Tokyo Nexus #8',
-          description: 'Tokyos underjordiska samhälle för de fattiga och bortglömda, där Stix konfronterar Rumiko.' }
+          description: 'Tokyos underjordiska samhälle för de fattiga och bortglömda, där Stix konfronterar Rumiko.' },
+        { id: 'boyle-heights', name: 'Boyle Heights', type: 'OMRÅDE // STADSDEL', sector: 'Los Angeles', firstAppearance: '#1',
+          description: 'Stadsdel i Los Angeles. År 2009 deltar Cal i en utredning här. När han kallas till möte med Sgt. Gutman gissar han felaktigt att Boyle Heights-fallet ska diskuteras (Origins #1).' }
       ],
 
       events: [
 
-        { id: 'ev-1', issue: '#1', year: 2009, title: 'Lydia Kine hittas död', description: 'Dr. Lydia Kine hittas hängd i sitt låsta laboratorium. Cal Moreaux får uppdraget att avsluta fallet snabbt och tyst, men tror inte på självmordet. Slutet av numret visar en attack mot Cal och Marcus.' },
+        { id: 'ev-1', issue: '#1', year: 2009, title: 'Lydia Kine hittas död', description: 'Dr. Lydia Kine hittas hängd i sitt låsta laboratorium. Cal Moreaux får uppdraget att avsluta fallet snabbt och tyst, men tror inte på självmordet. Slutet av numret visar en attack mot Cal och Marcus.',
+          plot: [
+            'Tidigt under 2000-talet utvecklar Tyrell Corporation robotar till Nexus-fasen, väsen nästan identiska med människor som kallas replikanter. De är överlägsna i styrka och smidighet och skapas för att användas som slavarbetare off-world, eller i farliga strider och vid kolonisering av andra planeter. Replikanter som flyr och återvänder till jorden jagas av särskilda polisenheter, Blade Runner Units, med order att döda varje inkräktande replikant. Detta är berättelsen om den första Blade Runnern.',
+            'År 2007, under belägringen av Kalanthia, är soldaterna Cal Moreaux och Avery mitt i en eldstrid. Tyrell Corporation har försett dem med en låda som ska öppnas om allt annat misslyckas. Avery öppnar den medan Cal rensar en korridor och ber honom tacka Tyrell å sina vägnar. Cal hör ett väsande ljud och återvänder för att finna alla i rummet döda, utom två individer, varav en svarar artigt på hans tack.',
+            'År 2009, på ett sjukhus i Los Angeles, sitter Cal, nu LAPD-detektiv, vid sin syster Nias sida. Hon lever men svarar inte på tilltal. På stationen får han ett fall om Tyrell-ingenjören Lydia Kines till synes självmord. Han reser till Tyrells högkvarter, där han är den förste utomstående som släpps in, och förs till platsen där hon dog. Där försöker han förhöra Lydias assistent Effie Koropey, som hittade kroppen, men Ilora Stahl, som Eldon Tyrell personligen valt ut, avbryter. Hon säger att allt som rör utredningen redan skickats till LAPD, men tycker att Cals färdigheter skulle göra större nytta hos Tyrell.',
+            'Cal går till La Plume Sauvage och berättar för sin vän Divina om situationen, och hon försöker avråda honom från att ta anställning hos Tyrell, för sin systers skull. När han kommer hem möter han Lydias bror Marcus, som insisterar på att hennes död inte var självmord och att företaget mörkar sanningen. Cal ser någon som lurar i skuggorna och försöker välta en stor låda över Marcus, så han knuffar undan honom och tar in honom i lägenheten. Effie ringer och berättar att en Nexus-5-prototyp rymde natten då Lydia dog.'
+          ],
+          appearances: {
+            individer: [{ id: 'avery' }, { id: 'chen', note: 'nämnd' }, { id: 'dante' }, { id: 'divina' }, { id: 'gutman' }, { id: 'lydia-kine', note: 'lik' }, { id: 'markus-kine' }, { id: 'effie-koropey' }, { id: 'cal-moreaux' }, { id: 'nia' }, { id: 'ilora-stahl' }, { id: 'eldon-tyrell', note: 'nämnd' }],
+            platser: [{ name: 'Boyle Heights', note: 'nämnd' }, { name: 'Kalifornien' }, { name: 'Jorden' }, { name: 'Kalanthia' }, { name: 'La Plume Sauvage' }, { name: 'Los Angeles' }, { name: 'Off-world-kolonierna' }, { name: 'Serrano Avenue', note: 'nämnd' }, { name: 'USA' }, { name: 'Whittier', note: 'nämnd' }],
+            grupper: [{ name: 'Heidecker-Vostro', note: 'nämnd' }, { name: 'Los Angeles Police Department' }, { name: 'Tyrell Corporation' }],
+            foremal: [{ name: 'Blaster' }]
+          } },
         { id: 'ev-2', issue: '#2', year: 2009, title: 'Spinnern attackeras', description: 'Tyrell hämtar Marcus från polisstationen, men färden slutar i en attack och krasch, och Marcus räddas av en replikant.' },
         { id: 'ev-3', issue: '#3', year: 2009, title: 'Asa är Lydia', description: 'Räddaren visar sig vara Asa, en replikant med Lydias medvetande. Stahl hittar filer som avslöjar att Lydia upptäckt medvetandeöverföring.' },
         { id: 'ev-4', issue: '#4', year: 2009, title: 'Jakten på museet och Effies död', description: 'Cal ställer Asa i Lydias lägenhet och jagar honom till ett museum, där Effie skjuts ihjäl av Stahl. Cal och Asa går samman.' },
@@ -993,9 +1031,25 @@
       document.getElementById('hdr-after').textContent = READ >= TOTAL ? 'ORIGINS KLAR' : `LÅST EFTER #${READ}`;
     }
 
-    const LINKS = [['Cal Moreaux','cal-moreaux'],['Cal','cal-moreaux'],['Lydia Kine','lydia-kine'],['Lydia','lydia-kine'],['Marcus Kine','markus-kine'],['Marcus','markus-kine'],['Effie Koropey','effie-koropey'],['Effie','effie-koropey'],['Ilora Stahl','ilora-stahl'],['Stahl','ilora-stahl'],['Eldon Tyrell','eldon-tyrell'],['Eldon','eldon-tyrell'],['Asa','asa'],['Arnault','arnault'],['Nia','nia'],['Divina','divina'],['Avery','avery'],['Chen','chen'],['Osha','osha'],['Gutman','gutman'],['Desiree','des'],['Des','des'],['Carlisle','carlisle']];
+    const LINKS = [['Cal Moreaux','cal-moreaux'],['Cal','cal-moreaux'],['Lydia Kine','lydia-kine'],['Lydia','lydia-kine'],['Marcus Kine','markus-kine'],['Marcus','markus-kine'],['Effie Koropey','effie-koropey'],['Effie','effie-koropey'],['Ilora Stahl','ilora-stahl'],['Stahl','ilora-stahl'],['Eldon Tyrell','eldon-tyrell'],['Eldon','eldon-tyrell'],['Asa','asa'],['Arnault','arnault'],['Nia','nia'],['Divina','divina'],['Avery','avery'],['Chen','chen'],['Dante','dante'],['Osha','osha'],['Peter Gutman','gutman'],['Gutman','gutman'],['Desiree','des'],['Des','des'],['Carlisle','carlisle']];
     const LINK_MAP = Object.fromEntries(LINKS);
     const LINK_RE = new RegExp('\\b(' + LINKS.map((l) => l[0]).join('|') + ')\\b', 'g');
+    function renderAppearances(ev) {
+      const a = ev.appearances;
+      if (!a) return '';
+      const chip = (x) => {
+        const c = x.id && ARCHIVE_DATA.characters.find((k) => k.id === x.id);
+        const label = (c ? c.name : x.name) + (x.note ? ` (${x.note})` : '');
+        return c
+          ? `<button type="button" onclick="openCharacterModal('${c.id}')" class="px-2 py-0.5 rounded bg-[#192030] font-mono text-[11px] text-noir-cyan hover:text-noir-amberBright cursor-pointer">${label}</button>`
+          : `<span class="px-2 py-0.5 rounded bg-[#192030] font-mono text-[11px] text-slate-300">${label}</span>`;
+      };
+      return [['INDIVIDER', a.individer], ['PLATSER', a.platser], ['GRUPPER', a.grupper], ['FÖREMÅL', a.foremal]]
+        .filter((g) => g[1] && g[1].length)
+        .map((g) => `<div><div class="font-mono text-[10px] text-noir-muted mb-1">${g[0]}</div><div class="flex flex-wrap gap-1.5">${g[1].map(chip).join('')}</div></div>`)
+        .join('');
+    }
+
     function srcChips(p) {
       const nums = [...new Set([...p.matchAll(/(Tokyo Nexus )?#(\d+)/g)].map((m) => (m[1] ? 'TOKYO NEXUS #' : 'ORIGINS #') + m[2]))];
       if (!nums.length) return '';
@@ -1132,6 +1186,17 @@
           `;
         })
         .join('');
+    }
+
+    function goHome() {
+      document.getElementById('search-input').value = '';
+      state.searchQuery = '';
+      document.getElementById('clear-search-btn').classList.add('hidden');
+      state.characterFaction = 'all';
+      state.characterWork = 'all';
+      if (state.selectedCharacterId) closeCharacterModal(false);
+      switchTab('characters');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function handleSearch(query) {
@@ -1289,8 +1354,15 @@
           card.innerHTML = `<div class="font-mono text-[10.5px] font-bold tracking-[0.07em] text-noir-amber uppercase">${WORKS[ev.work || 'origins'].name} ${ev.issue} // ÅR ${ev.year}</div>
             <h3 class="font-mono text-[15px] font-bold text-white">${ev.title}</h3>
             <p class="text-[13px] text-slate-300 leading-relaxed">${ev.description}</p>
-            <div class="font-mono text-[10px] text-noir-muted pt-1">MEDVERKANDE</div>
-            <div class="flex flex-wrap gap-1.5">${who.map((c) => `<button type="button" onclick="openCharacterModal('${c.id}')" class="px-2 py-0.5 rounded bg-[#192030] font-mono text-[11px] text-noir-cyan hover:text-noir-amberBright cursor-pointer">${c.name}</button>`).join('')}</div>`;
+            ${ev.plot ? `<div class="issue-more hidden mt-3 pt-3 border-t border-noir-border space-y-3 text-[12.5px] text-slate-300 leading-relaxed">${ev.plot.map((p) => `<p>${linkify(p, '')}</p>`).join('')}${renderAppearances(ev)}</div><div class="issue-hint mt-1 font-mono text-[10px] text-noir-cyan tracking-[0.06em]">TRYCK FÖR HANDLING OCH MEDVERKANDE ▾</div>` : `<div class="font-mono text-[10px] text-noir-muted pt-1">MEDVERKANDE</div><div class="flex flex-wrap gap-1.5">${who.map((c) => `<button type="button" onclick="openCharacterModal('${c.id}')" class="px-2 py-0.5 rounded bg-[#192030] font-mono text-[11px] text-noir-cyan hover:text-noir-amberBright cursor-pointer">${c.name}</button>`).join('')}</div>`}`;
+          if (ev.plot) {
+            card.classList.add('cursor-pointer');
+            card.addEventListener('click', (e) => {
+              if (e.target.closest('button')) return;
+              const open = card.querySelector('.issue-more').classList.toggle('hidden') === false;
+              card.querySelector('.issue-hint').textContent = open ? 'DÖLJ ▴' : 'TRYCK FÖR HANDLING OCH MEDVERKANDE ▾';
+            });
+          }
           container.appendChild(card);
         });
         const lock = document.createElement('div');
